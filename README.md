@@ -55,6 +55,15 @@ python -m clipforge.pipeline --input /path/to/video.mp4 --target-lang es
 - Translation is a local Argos Translate package download, keyed off the
   detected transcript language.
 
+## Workflows
+
+| Workflow | What it does |
+| --- | --- |
+| `clip.yml` | The original ClipForge pipeline above: one video URL in, one captioned 9:16 clip out. |
+| `supoclip.yml` | Runs [our SupoClip fork](https://github.com/superz1402/supoclip) (AGPL) on the runner via Docker Compose: LLM moment picking, virality scores, styled karaoke captions. Adds `CAPTION_TRANSLATE_TO` (fork feature) for translated captions via the local LLM. Key-free: local whisper + Ollama. |
+| `english.yml` | English caption pass for externally picked windows (e.g. SupoClip `clips.json`): cut, reframe, transcribe, LLM-translate, burn. |
+| `generate.yml` | MoneyPrinterTurbo (pinned) fully key-free: local LLM script, edge-tts voice, Mixkit-scraped stock footage (no API key), composed short. |
+
 ## Roadmap
 
 - Multiple ranked clips per run
@@ -64,8 +73,10 @@ python -m clipforge.pipeline --input /path/to/video.mp4 --target-lang es
 ## Credits
 
 Architecture inspired by [OpenShorts](https://github.com/mutonby/openshorts)
-(MIT). No code from SupoClip (AGPL) is used. Built with yt-dlp,
-faster-whisper, Ollama, MediaPipe, OpenCV, ffmpeg, and Argos Translate.
+(MIT). No code from SupoClip (AGPL) is used in this repo; the
+[SupoClip fork](https://github.com/superz1402/supoclip) lives separately under
+its AGPL license. Built with yt-dlp, faster-whisper, Ollama, MediaPipe,
+OpenCV, ffmpeg, Argos Translate, and Mixkit footage.
 
 ## License
 
