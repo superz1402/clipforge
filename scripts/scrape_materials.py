@@ -27,8 +27,21 @@ ALLOWED_LICENSE = ("publicdomain", "licenses/by/", "licenses/by-sa")
 
 
 def fetch(url, dest=None):
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=90) as resp:
+    import time
+    resp = None
+    for attempt in range(4):
+        req = urllib.request.Request(url, headers={"User-Agent": UA})
+        try:
+            resp = urllib.request.urlopen(req, timeout=90)
+            break
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and attempt < 3:
+                wait = 20 * (attempt + 1)
+                print(f"[mixkit] 429 rate-limited, backing off {wait}s", file=sys.stderr)
+                time.sleep(wait)
+            else:
+                raise
+    with resp:
         data = resp.read()
     if dest:
         with open(dest, "wb") as f:
