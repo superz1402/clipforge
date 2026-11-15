@@ -92,6 +92,15 @@ jobs:
           echo "SUBJECT=$SUBJECT" >> "$GITHUB_ENV"
           echo "topic: $SUBJECT"
 
+      - name: Generate footage search terms (local LLM)
+        if: inputs.stop_at == 'video' && inputs.material_queries == ''
+        run: |
+          PAYLOAD=$(jq -nc --arg m "${{ inputs.llm_model }}" --arg p "List 5 short stock-footage search phrases (2-4 words each, visually concrete, no people) for a YouTube Short about: $SUBJECT. Output only the phrases separated by commas." '{model:$m, prompt:$p, stream:false}')
+          TERMS=$(curl -sf http://localhost:11434/api/generate -d "$PAYLOAD" | jq -r '.response // ""' | tr '\n' ' ' | sed 's/[^a-zA-Z0-9, ]//g' | cut -c1-200)
+          if [ -z "$TERMS" ]; then TERMS="$SUBJECT"; fi
+          echo "TERMS=$TERMS" >> "$GITHUB_ENV"
+          echo "terms: $TERMS"
+
       - name: Configure MoneyPrinterTurbo
         working-directory: MoneyPrinterTurbo
         run: |
@@ -104,6 +113,7 @@ jobs:
         if: inputs.stop_at == 'video'
         run: |
           QUERIES="${{ inputs.material_queries }}"
+          if [ -z "$QUERIES" ]; then QUERIES="$TERMS"; fi
           if [ -z "$QUERIES" ]; then QUERIES="$SUBJECT"; fi
           python scripts/scrape_materials.py --queries "$QUERIES" --count 5 --outdir materials
           MATS=$(ls "$PWD"/materials/*.mp4 | paste -sd,)
@@ -125,6 +135,16 @@ jobs:
             --video-aspect 9:16 \
             --stop-at "${{ inputs.stop_at }}" \
             --task-id 11111111-1111-4111-8111-111111111111
+
+      - name: Burn hook-title overlay
+        if: inputs.stop_at == 'video'
+        run: |
+          TASKDIR=MoneyPrinterTurbo/storage/tasks/11111111-1111-4111-8111-111111111111
+          if python scripts/hook_overlay.py --video "$TASKDIR/final-1.mp4" --srt "$TASKDIR/subtitle.srt" --out "$TASKDIR/final-1-hook.mp4" && [ -f "$TASKDIR/final-1-hook.mp4" ]; then
+            mv "$TASKDIR/final-1-hook.mp4" "$TASKDIR/final-1.mp4"
+          else
+            echo "hook overlay unavailable, keeping original"
+          fi
 
       - name: Upload artifacts
         if: always()
