@@ -53,6 +53,12 @@ def clean_lines(text):
         line = re.sub(r"^\s*\d+[\.\)]\s*", "", raw).strip().strip('"').strip()
         if line and not line.lower().startswith(("here", "sure", "output")):
             lines.append(line)
+    # small models sometimes return the whole script as one paragraph:
+    # fall back to splitting it into sentences
+    if len(lines) < 4:
+        sents = [s.strip() for s in re.split(r"(?<=[.!?])\s+", " ".join(lines)) if s.strip()]
+        if len(sents) > len(lines):
+            lines = sents
     return lines
 
 
