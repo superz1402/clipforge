@@ -30,6 +30,10 @@ on:
         description: "Translate burned captions to this language (e.g. English). Empty = source language."
         required: false
         default: "English"
+      caption_names_pack:
+        description: "perfect-srt names pack for caption name protection (e.g. babymonster). Empty = off."
+        required: false
+        default: "babymonster"
       poll_timeout_minutes:
         description: "Max minutes to wait for processing"
         required: false
@@ -50,7 +54,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: superz1402/supoclip
-          ref: 10dffa5559ea6f0666b807d163c51bb858c71bcf
+          ref: de9356bf70f8bc9f1dbc973039c35733bec61507
           path: supoclip
 
       - name: Free disk space
@@ -69,6 +73,7 @@ jobs:
           set_kv LLM "ollama:${{ inputs.llm_model }}"
           set_kv TRANSCRIPTION_LANGUAGE "${{ inputs.transcription_language }}"
           set_kv CAPTION_TRANSLATE_TO "${{ inputs.caption_translate_to }}"
+          set_kv CAPTION_NAMES_PACK "${{ inputs.caption_names_pack }}"
           # Slow shared runners: give the local LLM room (upstream default 600s)
           set_kv TRANSCRIPT_ANALYSIS_TIMEOUT_SECONDS 1800
           set_kv ANALYSIS_TOTAL_TIMEOUT_SECONDS 5400
