@@ -28,9 +28,9 @@ Rules:
 - sentence 2 grounds it with a concrete fact: a number, a study, or a striking scale
 - the middle sentences explain what is actually happening and WHY, step by step (cause and effect, not vague claims)
 - sentence 7 adds one surprising consequence or comparison
-- sentence 8 lands the takeaway in plain words
+- the final sentence is a pointed question to the viewer that invites funny or knowledgeable comments, never a lecture-style wrap-up
 - never claim an animal has superhuman senses unless that is literally true; prefer real mechanisms (reflexes, anatomy, behavior, studies)
-- conversational, no intro or outro filler
+- entertaining and conversational, like a smart friend explaining, never a classroom teacher; no intro or outro filler
 - output ONLY the 8 sentences, one per line, no numbering, no quotes"""
 
 PHRASES_PROMPT = """Topic: {subject}

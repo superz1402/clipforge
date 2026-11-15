@@ -99,3 +99,12 @@ workflow files - nothing runs unattended anymore.
 Current state: bird script v4 (docs/scripts/birds-firecrackers-v4.txt) written from his
 research, render dispatched private. Next question for him when he's ready:
 "How can the jellyfish Turritopsis dohrnii live forever?" (Nov 16 slot, line 21).
+
+## PERMANENT STYLE RULE (Nov 15, his words, applies to EVERY video)
+"No need to explain we are not teachers we explain the scientific part and end it with
+a question for watcher making them make sure they answer or comment either sarcastic
+something or something knowledgeable (make this a permanent rule for everything video)."
+Every script: entertaining hook, accessible science (no lecture/teacher tone, no extended
+caveat sermons - fold qualifications in naturally), and END WITH A POINTED VIEWER
+QUESTION inviting jokes or debate. This supersedes takeaway-style endings, never factual
+accuracy. Baked into plan_video.py's SCRIPT_PROMPT.
