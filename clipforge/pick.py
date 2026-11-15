@@ -92,7 +92,9 @@ def pick_moment(transcript, ollama_url, model, min_clip, max_clip,
         f"{joined}\n\n"
         f"Pick the ONE moment that would perform best as a short vertical "
         f"clip: self-contained, surprising or insightful, strong opening "
-        f"line. It must be between {min_clip} and {max_clip} seconds long.\n"
+        f"line. It must be between {min_clip} and {max_clip} seconds long - "
+        f"aim for {max_clip} seconds unless the moment is clearly stronger "
+        f"when short. Skip intro/outro branding and title cards.\n"
         f'Respond with JSON only: {{"start": <seconds>, "end": <seconds>, '
         f'"title": "<3-6 word clip title>", "hook": "<punchy on-screen hook, '
         f'max 8 words>", "reason": "<why this moment>"}}'
