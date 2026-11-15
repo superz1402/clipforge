@@ -67,7 +67,8 @@ jobs:
       - name: Install Ollama and pull the LLM
         run: |
           curl -fsSL https://ollama.com/install.sh | sh
-          nohup ollama serve >/tmp/ollama.log 2>&1 &
+          # Bind on all interfaces so docker containers can reach it via host.docker.internal
+          OLLAMA_HOST=0.0.0.0 nohup ollama serve >/tmp/ollama.log 2>&1 &
           for i in $(seq 1 30); do curl -sf http://localhost:11434/api/version && break || sleep 2; done
           ollama pull qwen2.5:3b
 

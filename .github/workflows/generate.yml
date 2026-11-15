@@ -87,7 +87,7 @@ jobs:
             --video-language "${{ inputs.language }}" \
             --voice-name "${{ inputs.voice }}" \
             --video-source pexels \
-            --video-aspect portrait \
+            --video-aspect 9:16 \
             --stop-at "${{ inputs.stop_at }}" \
             --task-id demo1
 
