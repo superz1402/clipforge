@@ -88,7 +88,7 @@ jobs:
           QUERIES="${{ inputs.material_queries }}"
           if [ -z "$QUERIES" ]; then QUERIES="${{ inputs.subject }}"; fi
           python scripts/scrape_materials.py --queries "$QUERIES" --count 5 --outdir materials
-          MATS=$(ls materials/*.mp4 | paste -sd,)
+          MATS=$(ls "$PWD"/materials/*.mp4 | paste -sd,)
           echo "MATS=$MATS" >> "$GITHUB_ENV"
 
       - name: Generate the short
