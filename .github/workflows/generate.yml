@@ -14,7 +14,7 @@ on:
       voice:
         description: "edge-tts voice"
         required: false
-        default: "en-US-AndrewMultilingualNeural"
+        default: "en-US-BrianMultilingualNeural"
       llm_model:
         description: "Ollama model for script + material terms"
         required: false
