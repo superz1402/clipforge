@@ -54,7 +54,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: superz1402/supoclip
-          ref: de9356bf70f8bc9f1dbc973039c35733bec61507
+          ref: 46653422f7cc3723e092e55cc89e69f88b6ac42e
           path: supoclip
 
       - name: Free disk space
