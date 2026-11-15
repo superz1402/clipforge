@@ -83,6 +83,24 @@ def main():
     phrases = clean_lines(phrases_raw)
     phrases = [re.sub(r"[^a-zA-Z0-9 ]", "", p).strip() for p in phrases if p.strip()]
     phrases = [p for p in phrases if len(p.split()) >= 2][: len(beats)]
+
+    # Subject-lock enforcement: the small model drifts to abstract words
+    # ("sky", "ghosts") that scrape as off-topic footage. Every phrase must
+    # contain a subject content word; otherwise prepend the first one.
+    stop = {"why", "how", "what", "are", "is", "the", "of", "to", "in", "and",
+            "a", "an", "do", "does", "your", "you", "can", "that", "this",
+            "it", "its", "on", "for", "with", "about", "their", "they", "when"}
+    keywords = [w for w in re.sub(r"[^a-z ]", " ", args.subject.lower()).split()
+                if w not in stop]
+    if keywords:
+        lead = keywords[0]
+        locked = []
+        for p in phrases:
+            low = p.lower()
+            if not any(k in low for k in keywords):
+                p = f"{lead} {p}"
+            locked.append(p)
+        phrases = locked
     if len(phrases) < 3:
         print(f"phrases unusable ({len(phrases)})", file=sys.stderr)
         return 1

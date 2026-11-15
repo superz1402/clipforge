@@ -64,6 +64,11 @@ def archive_items(query):
     docs = data.get("response", {}).get("docs", [])
     ok = []
     for d in docs:
+        # Only NOAA Ocean Exploration uploads: other agencies in the
+        # collection (e.g. National Park Service) mix in B&W historical
+        # and visitor footage that fails topic matching.
+        if not d.get("identifier", "").startswith("noaa-oe-video"):
+            continue
         lic = (d.get("licenseurl") or "").lower()
         if any(a in lic for a in ALLOWED_LICENSE) and "nc" not in lic and "nd" not in lic:
             ok.append(d)
@@ -126,11 +131,12 @@ def main():
             print(f"[skip] {asset}: {exc}", flush=True)
             return False
 
-    for query in [q.strip() for q in args.queries.split(",") if q.strip()]:
-        if len(downloaded) >= args.count:
-            break
+    queries = [q.strip() for q in args.queries.split(",") if q.strip()]
 
-        if args.source in ("auto", "mixkit"):
+    if args.source in ("auto", "mixkit"):
+        for query in queries:
+            if len(downloaded) >= args.count:
+                break
             try:
                 for vid in mixkit_ids(query):
                     if len(downloaded) >= args.count:
@@ -143,6 +149,7 @@ def main():
             except Exception as exc:  # noqa: BLE001
                 print(f"[mixkit] failed: {exc}", flush=True)
 
+    for query in queries:
         if len(downloaded) >= args.count:
             break
         if args.source in ("auto", "archive"):
