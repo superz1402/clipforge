@@ -108,7 +108,7 @@ jobs:
           while IFS= read -r phrase; do
             [ -z "$phrase" ] && continue
             i=$((i+1))
-            python scripts/scrape_materials.py --queries "$phrase" --count 1 --outdir materials --prefix "$(printf '%02d' "$i")-" || true
+            python scripts/scrape_materials.py --queries "$phrase,${phrase%% *}" --count 1 --outdir materials --prefix "$(printf '%02d' "$i")-" || true
           done < plan/phrases.txt
           MATS=$(ls "$PWD"/materials/*.mp4 2>/dev/null | sort | paste -sd,)
           if [ -z "$MATS" ]; then echo "no materials scraped"; exit 1; fi

@@ -39,8 +39,12 @@ def main():
 
     os.makedirs(args.outdir, exist_ok=True)
     wanted_res = args.res.lstrip("-")
+    used_file = os.path.join(args.outdir, ".used_ids")
     seen_ids = set()
+    if os.path.exists(used_file):
+        seen_ids.update(x.strip() for x in open(used_file) if x.strip())
     downloaded = []
+    new_ids = []
 
     for query in [q.strip() for q in args.queries.split(",") if q.strip()]:
         if len(downloaded) >= args.count:
@@ -69,9 +73,14 @@ def main():
                     os.remove(dest)
                     continue
                 downloaded.append(dest)
+                new_ids.append(vid)
                 print(f"[ok] {asset} -> {dest} ({size // 1024} KB)", flush=True)
             except Exception as exc:  # noqa: BLE001
                 print(f"[skip] {asset}: {exc}", flush=True)
+
+    if new_ids:
+        with open(used_file, "a") as f:
+            f.write("\n".join(new_ids) + "\n")
 
     if not downloaded:
         print("ERROR: no materials downloaded", flush=True)
