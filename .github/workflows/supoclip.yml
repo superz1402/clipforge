@@ -18,6 +18,14 @@ on:
         description: "Clip length preset (auto/short/medium/long)"
         required: false
         default: "auto"
+      transcription_language:
+        description: "Force transcript language (e.g. ko, en, th). Empty = whisper auto-detect."
+        required: false
+        default: ""
+      llm_model:
+        description: "Ollama model for moment selection"
+        required: false
+        default: "qwen2.5:7b"
       poll_timeout_minutes:
         description: "Max minutes to wait for processing"
         required: false
@@ -54,7 +62,8 @@ jobs:
           set_kv() { sed -i "s|^$1=.*|$1=$2|" .env; grep -q "^$1=" .env || echo "$1=$2" >> .env; }
           set_kv TRANSCRIPTION_PROVIDER whisper
           set_kv WHISPER_MODEL_SIZE "${{ inputs.whisper_model }}"
-          set_kv LLM "ollama:qwen2.5:3b"
+          set_kv LLM "ollama:${{ inputs.llm_model }}"
+          set_kv TRANSCRIPTION_LANGUAGE "${{ inputs.transcription_language }}"
           set_kv OLLAMA_BASE_URL "http://host.docker.internal:11434/v1"
           set_kv BACKEND_CPU_ONLY true
           set_kv SELF_HOST true
@@ -70,7 +79,7 @@ jobs:
           # Bind on all interfaces so docker containers can reach it via host.docker.internal
           OLLAMA_HOST=0.0.0.0 nohup ollama serve >/tmp/ollama.log 2>&1 &
           for i in $(seq 1 30); do curl -sf http://localhost:11434/api/version && break || sleep 2; done
-          ollama pull qwen2.5:3b
+          ollama pull ${{ inputs.llm_model }}
 
       - name: Build and start SupoClip (backend + worker + db)
         working-directory: supoclip
