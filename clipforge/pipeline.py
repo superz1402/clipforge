@@ -24,9 +24,25 @@ def download(source, workdir):
         print(f"[download] local file: {source}")
         return source
     out_tpl = os.path.join(workdir, "source.%(ext)s")
-    cmd = ["yt-dlp", "--no-playlist", "-f", "best[ext=mp4]/best",
-           "-o", out_tpl, source]
-    subprocess.run(cmd, check=True)
+    base = ["yt-dlp", "--no-playlist", "-f", "best[ext=mp4]/best",
+            "-o", out_tpl]
+    attempts = [[]]
+    if "youtube.com" in source or "youtu.be" in source:
+        # Cloud IPs are often bot-walled; some player clients get through.
+        attempts += [["--extractor-args", f"youtube:player_client={c}"]
+                     for c in ("android", "tv", "web_embedded")]
+    last_err = ""
+    for extra in attempts:
+        for old in glob.glob(os.path.join(workdir, "source.*")):
+            os.remove(old)
+        proc = subprocess.run(base + extra + [source],
+                              capture_output=True, text=True)
+        if proc.returncode == 0 and glob.glob(
+                os.path.join(workdir, "source.*")):
+            break
+        last_err = proc.stderr or proc.stdout
+    else:
+        raise RuntimeError(f"download failed:\n{last_err[-1500:]}")
     matches = sorted(glob.glob(os.path.join(workdir, "source.*")))
     if not matches:
         raise RuntimeError("yt-dlp produced no file")
