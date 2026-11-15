@@ -83,3 +83,19 @@ remake script is docs/scripts/birds-firecrackers-v3.txt.
 **Cron uploads are PAUSED to private** (PRIVACY default flipped in generate.yml, marked
 with a PAUSED comment) until he approves script quality - flip the default back to
 'public' once he does. Daily runs keep producing drafts privately in the meantime.
+
+## WORKFLOW CHANGE (Nov 15, 11:45 PM, his explicit instruction)
+"tell me the questions, I will provide you it's research and on that you write the video
+script and generate the video." He rejected our auto-researched script. New contract:
+1. The 30-day calendar now supplies QUESTIONS for him, one at a time via main.
+2. He replies with his research. We write the script FROM HIS MATERIAL only, cautious
+   wording where his text lacks direct evidence; flag gaps to him, don't silently swap
+   in a different narrative.
+3. Script goes to him for review. On approval, dispatch generate.yml with the `script`
+   input (verbatim beats), upload PRIVATE, gate-check frames, report the private preview.
+4. Public ONLY on his explicit go. The PRIVACY default stays 'private'.
+Both cron schedules (generate 13:30 UTC + watchdog 13:50 UTC) are DISABLED in the
+workflow files - nothing runs unattended anymore.
+Current state: bird script v4 (docs/scripts/birds-firecrackers-v4.txt) written from his
+research, render dispatched private. Next question for him when he's ready:
+"How can the jellyfish Turritopsis dohrnii live forever?" (Nov 16 slot, line 21).

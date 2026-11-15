@@ -1,8 +1,9 @@
 name: Cron watchdog
 on:
-  schedule:
-    # 20 min after the daily generate cron (13:30 UTC = 7:00 PM IST)
-    - cron: "50 13 * * *"
+  # schedule DISABLED with generate.yml's cron (user workflow change, Nov 15):
+  # nothing to watch while daily auto-generation is off.
+  # schedule:
+  #   - cron: "50 13 * * *"
   workflow_dispatch:
 
 jobs:

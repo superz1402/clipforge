@@ -39,9 +39,11 @@ on:
         description: "MoneyPrinterTurbo commit (pinned)"
         required: false
         default: "ce289ffb61a118779c56d6b4a34181905dbed2b9"
-  schedule:
-    # Daily 13:30 UTC = 7:00 PM IST
-    - cron: "30 13 * * *"
+  # schedule DISABLED (user workflow change, Nov 15): no unattended topic-to-video
+  # generation. Runs are manual dispatches with an approved `script` input built from
+  # his supplied research. Re-enable only if he asks.
+  # schedule:
+  #   - cron: "30 13 * * *"
 
 jobs:
   generate:
