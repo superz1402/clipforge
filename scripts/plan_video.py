@@ -73,6 +73,13 @@ def main():
     script_raw = ollama(SCRIPT_PROMPT.format(subject=args.subject), args.model, args.base_url)
     beats = clean_lines(script_raw)[:6]
     if len(beats) < 4:
+        # one retry with an even plainer instruction before giving up
+        print("first attempt unusable, retrying with plain prompt", file=sys.stderr)
+        retry = (f"Write exactly 6 short sentences about: {args.subject}. "
+                 "One sentence per line. No numbering, no intro, no titles.")
+        script_raw = ollama(retry, args.model, args.base_url)
+        beats = clean_lines(script_raw)[:6]
+    if len(beats) < 4:
         print(f"script unusable ({len(beats)} beats)", file=sys.stderr)
         return 1
 
