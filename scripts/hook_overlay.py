@@ -61,14 +61,18 @@ def main():
     p.add_argument("--video", required=True)
     p.add_argument("--srt", required=True)
     p.add_argument("--out", required=True)
+    p.add_argument("--text", default="", help="hook text override (default: first srt cue)")
     a = p.parse_args()
 
-    cue = first_cue(a.srt)
-    if not cue:
-        print("no usable first cue; hook overlay skipped")
-        return 0
-    start, end, text = cue
-    end = min(end, start + MAX_HOOK_SECONDS)
+    if a.text.strip():
+        start, end, text = 0.1, MAX_HOOK_SECONDS, a.text.strip()
+    else:
+        cue = first_cue(a.srt)
+        if not cue:
+            print("no usable first cue; hook overlay skipped")
+            return 0
+        start, end, text = cue
+        end = min(end, start + MAX_HOOK_SECONDS)
     text = re.sub(r"\{[^}]*\}", "", text).upper().replace("\n", " ").strip()
     words = text.split()
     if len(words) > 10:

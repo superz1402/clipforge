@@ -34,6 +34,7 @@ def main():
     ap.add_argument("--count", type=int, default=5)
     ap.add_argument("--outdir", default="materials")
     ap.add_argument("--res", default="720")
+    ap.add_argument("--prefix", default="", help="filename prefix (e.g. 01- for ordered beats)")
     args = ap.parse_args()
 
     os.makedirs(args.outdir, exist_ok=True)
@@ -60,7 +61,7 @@ def main():
                 continue
             seen_ids.add(vid)
             asset = f"https://assets.mixkit.co/videos/{vid}/{vid}-{wanted_res}.mp4"
-            dest = os.path.join(args.outdir, f"mixkit-{vid}.mp4")
+            dest = os.path.join(args.outdir, f"{args.prefix}mixkit-{vid}.mp4")
             try:
                 fetch(asset, dest)
                 size = os.path.getsize(dest)

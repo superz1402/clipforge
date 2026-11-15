@@ -14,7 +14,7 @@ on:
       voice:
         description: "edge-tts voice"
         required: false
-        default: "en-US-AriaNeural"
+        default: "en-US-AndrewMultilingualNeural"
       llm_model:
         description: "Ollama model for script + material terms"
         required: false
@@ -24,7 +24,7 @@ on:
         required: false
         default: "video"
       material_queries:
-        description: "Comma-separated stock footage search terms (Mixkit, key-free). Empty = use the subject."
+        description: "Comma-separated stock footage search terms (Mixkit, key-free). Empty = per-beat plan from the local LLM."
         required: false
         default: ""
       privacy:
@@ -92,14 +92,36 @@ jobs:
           echo "SUBJECT=$SUBJECT" >> "$GITHUB_ENV"
           echo "topic: $SUBJECT"
 
-      - name: Generate footage search terms (local LLM)
+      - name: Plan script + per-beat footage (local LLM)
         if: inputs.stop_at == 'video' && inputs.material_queries == ''
         run: |
-          PAYLOAD=$(jq -nc --arg m "${{ inputs.llm_model }}" --arg p "List 5 short stock-footage search phrases (2-4 words each, visually concrete, no people) for a YouTube Short about: $SUBJECT. Output only the phrases separated by commas." '{model:$m, prompt:$p, stream:false}')
-          TERMS=$(curl -sf http://localhost:11434/api/generate -d "$PAYLOAD" | jq -r '.response // ""' | tr '\n' ' ' | sed 's/[^a-zA-Z0-9, ]//g' | cut -c1-200)
-          if [ -z "$TERMS" ]; then TERMS="$SUBJECT"; fi
-          echo "TERMS=$TERMS" >> "$GITHUB_ENV"
-          echo "terms: $TERMS"
+          if python scripts/plan_video.py --subject "$SUBJECT" --model "${{ inputs.llm_model }}" --outdir plan; then
+            echo "PLANNED=yes" >> "$GITHUB_ENV"
+          else
+            echo "PLANNED=no" >> "$GITHUB_ENV"
+          fi
+
+      - name: Scrape stock footage per beat (key-free, Mixkit)
+        if: inputs.stop_at == 'video' && env.PLANNED == 'yes'
+        run: |
+          i=0
+          while IFS= read -r phrase; do
+            [ -z "$phrase" ] && continue
+            i=$((i+1))
+            python scripts/scrape_materials.py --queries "$phrase" --count 1 --outdir materials --prefix "$(printf '%02d' "$i")-" || true
+          done < plan/phrases.txt
+          MATS=$(ls "$PWD"/materials/*.mp4 2>/dev/null | sort | paste -sd,)
+          if [ -z "$MATS" ]; then echo "no materials scraped"; exit 1; fi
+          echo "MATS=$MATS" >> "$GITHUB_ENV"
+
+      - name: Scrape stock footage (fallback, subject-based)
+        if: inputs.stop_at == 'video' && env.PLANNED != 'yes'
+        run: |
+          QUERIES="${{ inputs.material_queries }}"
+          if [ -z "$QUERIES" ]; then QUERIES="$SUBJECT"; fi
+          python scripts/scrape_materials.py --queries "$QUERIES" --count 5 --outdir materials
+          MATS=$(ls "$PWD"/materials/*.mp4 | sort | paste -sd,)
+          echo "MATS=$MATS" >> "$GITHUB_ENV"
 
       - name: Configure MoneyPrinterTurbo
         working-directory: MoneyPrinterTurbo
@@ -108,39 +130,47 @@ jobs:
           sed -i 's/^llm_provider = .*/llm_provider = "ollama"/' config.toml
           sed -i 's/^ollama_model_name = .*/ollama_model_name = "${{ inputs.llm_model }}"/' config.toml
           sed -i 's/^video_source = .*/video_source = "local"/' config.toml
-
-      - name: Scrape stock footage (key-free, Mixkit)
-        if: inputs.stop_at == 'video'
-        run: |
-          QUERIES="${{ inputs.material_queries }}"
-          if [ -z "$QUERIES" ]; then QUERIES="$TERMS"; fi
-          if [ -z "$QUERIES" ]; then QUERIES="$SUBJECT"; fi
-          python scripts/scrape_materials.py --queries "$QUERIES" --count 5 --outdir materials
-          MATS=$(ls "$PWD"/materials/*.mp4 | paste -sd,)
-          echo "MATS=$MATS" >> "$GITHUB_ENV"
+          # Engagement: sequential footage matching the narration beats, quick cuts
+          sed -i -E 's|^#? *video_concat_mode = .*|video_concat_mode = "sequential"|' config.toml
+          sed -i -E 's|^#? *video_clip_duration = .*|video_clip_duration = 3|' config.toml
+          # Captions: SupoClip-style single-word pop, bold, thick outline
+          sed -i -E 's|^#? *subtitle_display_mode = .*|subtitle_display_mode = "word_by_word"|' config.toml
+          sed -i -E 's|^#? *subtitle_animation = .*|subtitle_animation = "pop_spring"|' config.toml
+          sed -i -E 's|^#? *font_name = .*|font_name = "BeVietnamPro-Bold.ttf"|' config.toml
+          sed -i -E 's|^#? *font_size = .*|font_size = 90|' config.toml
+          sed -i -E 's|^#? *stroke_width = .*|stroke_width = 4|' config.toml
+          sed -i -E 's|^#? *subtitle_position = .*|subtitle_position = "two_thirds_bottom"|' config.toml
 
       - name: Generate the short
         working-directory: MoneyPrinterTurbo
         run: |
-          if [ "${{ inputs.stop_at }}" = "video" ]; then
-            SOURCE_ARGS="--video-source local --video-materials $MATS"
-          else
-            SOURCE_ARGS="--video-source local"
+          ARGS=(--video-subject "$SUBJECT"
+                --video-language "${{ inputs.language }}"
+                --voice-name "${{ inputs.voice }}")
+          if [ "$PLANNED" = "yes" ] && [ -f ../plan/script.txt ]; then
+            ARGS+=(--video-script "$(cat ../plan/script.txt)")
           fi
-          python cli.py \
-            --video-subject "$SUBJECT" \
-            --video-language "${{ inputs.language }}" \
-            --voice-name "${{ inputs.voice }}" \
-            $SOURCE_ARGS \
-            --video-aspect 9:16 \
-            --stop-at "${{ inputs.stop_at }}" \
-            --task-id 11111111-1111-4111-8111-111111111111
+          if [ "${{ inputs.stop_at }}" = "video" ]; then
+            ARGS+=(--video-source local --video-materials "$MATS")
+          else
+            ARGS+=(--video-source local)
+          fi
+          ARGS+=(--video-aspect 9:16 --stop-at "${{ inputs.stop_at }}"
+                 --task-id 11111111-1111-4111-8111-111111111111)
+          python cli.py "${ARGS[@]}"
 
       - name: Burn hook-title overlay
         if: inputs.stop_at == 'video'
         run: |
           TASKDIR=MoneyPrinterTurbo/storage/tasks/11111111-1111-4111-8111-111111111111
-          if python scripts/hook_overlay.py --video "$TASKDIR/final-1.mp4" --srt "$TASKDIR/subtitle.srt" --out "$TASKDIR/final-1-hook.mp4" && [ -f "$TASKDIR/final-1-hook.mp4" ]; then
+          HOOK_TEXT=""
+          if [ "$PLANNED" = "yes" ] && [ -f plan/beats.txt ]; then HOOK_TEXT=$(head -1 plan/beats.txt); fi
+          if [ -n "$HOOK_TEXT" ]; then
+            python scripts/hook_overlay.py --video "$TASKDIR/final-1.mp4" --srt "$TASKDIR/subtitle.srt" --out "$TASKDIR/final-1-hook.mp4" --text "$HOOK_TEXT"
+          else
+            python scripts/hook_overlay.py --video "$TASKDIR/final-1.mp4" --srt "$TASKDIR/subtitle.srt" --out "$TASKDIR/final-1-hook.mp4"
+          fi
+          if [ -f "$TASKDIR/final-1-hook.mp4" ]; then
             mv "$TASKDIR/final-1-hook.mp4" "$TASKDIR/final-1.mp4"
           else
             echo "hook overlay unavailable, keeping original"
