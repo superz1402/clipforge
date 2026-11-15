@@ -94,7 +94,8 @@ def pick_moment(transcript, ollama_url, model, min_clip, max_clip,
         f"clip: self-contained, surprising or insightful, strong opening "
         f"line. It must be between {min_clip} and {max_clip} seconds long - "
         f"aim for {max_clip} seconds unless the moment is clearly stronger "
-        f"when short. Skip intro/outro branding and title cards.\n"
+        f"when short. Skip intro/outro branding and title cards. Only "
+        f"choose a window that actually contains transcript lines.\n"
         f'Respond with JSON only: {{"start": <seconds>, "end": <seconds>, '
         f'"title": "<3-6 word clip title>", "hook": "<punchy on-screen hook, '
         f'max 8 words>", "reason": "<why this moment>"}}'
@@ -109,6 +110,14 @@ def pick_moment(transcript, ollama_url, model, min_clip, max_clip,
                 break
             except Exception as exc:  # noqa: BLE001 - any LLM failure falls back
                 print(f"[pick] LLM attempt {attempt} failed: {exc}")
+    if moment is not None:
+        words_in = sum(1 for w in transcript["words"]
+                       if w["end"] > moment["start"]
+                       and w["start"] < moment["end"])
+        if words_in < 8:
+            print(f"[pick] LLM window has only {words_in} words - "
+                  "rejecting, using fallback")
+            moment = None
     if moment is None:
         moment = _fallback_moment(transcript, min_clip, max_clip)
     with open(os.path.join(workdir, "moment.json"), "w") as f:
