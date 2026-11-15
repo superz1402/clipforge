@@ -46,11 +46,11 @@ jobs:
       - name: Check out clipforge (driver script)
         uses: actions/checkout@v4
 
-      - name: Check out SupoClip (pinned)
+      - name: Check out SupoClip fork (pinned)
         uses: actions/checkout@v4
         with:
           repository: superz1402/supoclip
-          ref: 862a0e1ac5c46b1a206194c114b771f24c4b3805
+          ref: 10dffa5559ea6f0666b807d163c51bb858c71bcf
           path: supoclip
 
       - name: Free disk space
@@ -69,6 +69,9 @@ jobs:
           set_kv LLM "ollama:${{ inputs.llm_model }}"
           set_kv TRANSCRIPTION_LANGUAGE "${{ inputs.transcription_language }}"
           set_kv CAPTION_TRANSLATE_TO "${{ inputs.caption_translate_to }}"
+          # Slow shared runners: give the local LLM room (upstream default 600s)
+          set_kv TRANSCRIPT_ANALYSIS_TIMEOUT_SECONDS 1800
+          set_kv ANALYSIS_TOTAL_TIMEOUT_SECONDS 5400
           set_kv OLLAMA_BASE_URL "http://host.docker.internal:11434/v1"
           set_kv BACKEND_CPU_ONLY true
           set_kv SELF_HOST true
