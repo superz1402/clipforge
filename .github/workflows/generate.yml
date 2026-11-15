@@ -1,0 +1,98 @@
+name: generate
+
+on:
+  workflow_dispatch:
+    inputs:
+      subject:
+        description: "Video topic"
+        required: true
+      language:
+        description: "Script language code"
+        required: false
+        default: "en-US"
+      voice:
+        description: "edge-tts voice"
+        required: false
+        default: "en-US-AriaNeural"
+      llm_model:
+        description: "Ollama model for script + material terms"
+        required: false
+        default: "qwen2.5:3b"
+      stop_at:
+        description: "Stop after stage (script|terms|audio|subtitle|materials|video)"
+        required: false
+        default: "video"
+      mpt_commit:
+        description: "MoneyPrinterTurbo commit (pinned)"
+        required: false
+        default: "ce289ffb61a118779c56d6b4a34181905dbed2b9"
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core fonts-noto-core
+
+      - name: Clone MoneyPrinterTurbo (pinned)
+        run: |
+          mkdir MoneyPrinterTurbo
+          cd MoneyPrinterTurbo
+          git init -q
+          git remote add origin https://github.com/harry0703/MoneyPrinterTurbo.git
+          git fetch -q --depth 1 origin "${{ inputs.mpt_commit }}"
+          git checkout -q FETCH_HEAD
+
+      - name: Install Python dependencies
+        working-directory: MoneyPrinterTurbo
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt -r requirements-security.txt
+
+      - name: Install Ollama and pull the script model
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          nohup ollama serve > ollama.log 2>&1 &
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:11434/api/tags > /dev/null && break
+            sleep 1
+          done
+          ollama pull "${{ inputs.llm_model }}"
+
+      - name: Configure MoneyPrinterTurbo
+        working-directory: MoneyPrinterTurbo
+        env:
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+        run: |
+          cp config.example.toml config.toml
+          sed -i 's/^llm_provider = .*/llm_provider = "ollama"/' config.toml
+          sed -i 's/^ollama_model_name = .*/ollama_model_name = "${{ inputs.llm_model }}"/' config.toml
+          sed -i "s|^pexels_api_keys = .*|pexels_api_keys = [\"$PEXELS_API_KEY\"]|" config.toml
+          sed -i 's/^video_source = .*/video_source = "pexels"/' config.toml
+
+      - name: Generate the short
+        working-directory: MoneyPrinterTurbo
+        run: |
+          python cli.py \
+            --video-subject "${{ inputs.subject }}" \
+            --video-language "${{ inputs.language }}" \
+            --voice-name "${{ inputs.voice }}" \
+            --video-source pexels \
+            --video-aspect portrait \
+            --stop-at "${{ inputs.stop_at }}" \
+            --task-id demo1
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mpt-output
+          path: MoneyPrinterTurbo/storage/tasks/
+          if-no-files-found: warn
