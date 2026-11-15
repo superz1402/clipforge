@@ -188,6 +188,22 @@ jobs:
                  --task-id 11111111-1111-4111-8111-111111111111)
           python cli.py "${ARGS[@]}"
 
+      - name: Verify narration matches supplied script (fail-closed)
+        if: inputs.script != '' && inputs.stop_at == 'video'
+        run: |
+          python3 - <<'PY'
+          import json, re, sys
+          norm = lambda t: re.sub(r"[^a-z0-9]+", " ", t.lower()).strip()
+          beats = [norm(b) for b in open("plan/beats.txt") if b.strip()]
+          got = norm(json.load(open("MoneyPrinterTurbo/storage/tasks/11111111-1111-4111-8111-111111111111/script.json"))["script"])
+          missing = [b for b in (beats[0], beats[-1]) if b[:60] not in got]
+          if missing:
+              print("RENDERED NARRATION DOES NOT MATCH SUPPLIED SCRIPT - refusing upload", file=sys.stderr)
+              print("missing beat:", missing[0][:100], file=sys.stderr)
+              sys.exit(1)
+          print(f"narration verified: {len(beats)} beats, first+last present in rendered script")
+          PY
+
       - name: Burn hook-title overlay
         if: inputs.stop_at == 'video'
         run: |
