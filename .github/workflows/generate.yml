@@ -141,7 +141,8 @@ jobs:
           sed -i -E 's|^#? *font_name = .*|font_name = "BeVietnamPro-Bold.ttf"|' config.toml
           sed -i -E 's|^#? *font_size = .*|font_size = 90|' config.toml
           sed -i -E 's|^#? *stroke_width = .*|stroke_width = 4|' config.toml
-          sed -i -E 's|^#? *subtitle_position = .*|subtitle_position = "two_thirds_bottom"|' config.toml
+          sed -i -E 's|^#? *subtitle_position = .*|subtitle_position = "custom"|' config.toml
+          sed -i -E 's|^#? *custom_position = .*|custom_position = 72.0|' config.toml
 
       - name: Generate the short
         working-directory: MoneyPrinterTurbo

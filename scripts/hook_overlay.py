@@ -74,6 +74,10 @@ def main():
         start, end, text = cue
         end = min(end, start + MAX_HOOK_SECONDS)
     text = re.sub(r"\{[^}]*\}", "", text).upper().replace("\n", " ").strip()
+    # cut at the first sentence end so a long hook is not truncated mid-thought
+    m = re.search(r"[.?!]", text)
+    if m and 0 < m.end() <= 60:
+        text = text[: m.end()].strip()
     words = text.split()
     if len(words) > 10:
         text = " ".join(words[:10])
