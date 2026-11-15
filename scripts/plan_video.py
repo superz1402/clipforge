@@ -22,11 +22,11 @@ import urllib.request
 
 SCRIPT_PROMPT = """Write a YouTube Shorts voiceover script that clearly EXPLAINS the science of: {subject}.
 Rules:
-- 90 to 115 words total
-- exactly 8 short sentences, one idea each
+- aim for 90 to 115 words, longer if the explanation needs it
+- about 8 short sentences, one idea each
 - sentence 1 is a curious question hook under 14 words
 - sentence 2 grounds it with a concrete fact: a number, a study, or a striking scale
-- sentences 3-6 explain the actual mechanism step by step (what happens in the body or in nature, and WHY - cause and effect, not vague claims)
+- the middle sentences explain what is actually happening and WHY, step by step (cause and effect, not vague claims)
 - sentence 7 adds one surprising consequence or comparison
 - sentence 8 lands the takeaway in plain words
 - never claim an animal has superhuman senses unless that is literally true; prefer real mechanisms (reflexes, anatomy, behavior, studies)

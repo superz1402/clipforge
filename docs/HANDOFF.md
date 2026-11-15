@@ -77,7 +77,7 @@ in GitHub + the user's Instinct vault.
 His verdict on the first bird short: "scripting was not good, doesn't feel informational,
 too short to get clarity." He then confirmed the standard for ALL videos: explain why/how,
 clear setup, proper explanation, takeaway - length follows the explanation. plan_video.py
-now enforces this (8-beat structure, 90-115 words). Approved scripts can be rendered
+now enforces this (8-beat structure as a guide, ~90-115 words, longer when the explanation needs it). Approved scripts can be rendered
 verbatim via the workflow's `script` dispatch input (skips the LLM). The approved bird
 remake script is docs/scripts/birds-firecrackers-v3.txt.
 **Cron uploads are PAUSED to private** (PRIVACY default flipped in generate.yml, marked
