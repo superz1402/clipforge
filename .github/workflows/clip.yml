@@ -1,0 +1,72 @@
+name: clip
+
+on:
+  workflow_dispatch:
+    inputs:
+      video_url:
+        description: "Direct video file URL (non-YouTube) to clip from"
+        required: true
+      target_lang:
+        description: "Optional caption translation target (Argos code, e.g. es, hi, fr)"
+        required: false
+        default: ""
+      whisper_model:
+        description: "faster-whisper model size"
+        required: false
+        default: "base"
+      llm_model:
+        description: "Ollama model for moment picking"
+        required: false
+        default: "qwen2.5:3b"
+      max_clip_seconds:
+        description: "Maximum clip length"
+        required: false
+        default: "60"
+
+jobs:
+  clip:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Install Ollama and pull the moment-picking model
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          nohup ollama serve > ollama.log 2>&1 &
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:11434/api/tags > /dev/null && break
+            sleep 1
+          done
+          ollama pull "${{ inputs.llm_model }}"
+
+      - name: Run the pipeline
+        run: |
+          python -m clipforge.pipeline \
+            --input "${{ inputs.video_url }}" \
+            --whisper-model "${{ inputs.whisper_model }}" \
+            --llm-model "${{ inputs.llm_model }}" \
+            --max-clip "${{ inputs.max_clip_seconds }}" \
+            --target-lang "${{ inputs.target_lang }}"
+
+      - name: Upload clip artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clipforge-output
+          path: out/
+          if-no-files-found: warn

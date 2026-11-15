@@ -1,0 +1,44 @@
+[Script Info]
+PlayResX: 1080
+PlayResY: 1920
+ScriptType: v4.00+
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Caption,DejaVu Sans,78,&H00FFFFFF,&H0000D7FF,&H00000000,&H80000000,1,0,0,0,100,100,0,0,1,5,0,2,60,60,220,1
+Style: Hook,DejaVu Sans,104,&H0000D7FF,&H0000D7FF,&H00000000,&H80000000,1,0,0,0,100,100,1,0,1,6,0,8,60,60,330,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:01.42,Caption,,0,0,0,,seguro cracker puede simular
+Dialogue: 0,0:00:01.42,0:00:03.44,Caption,,0,0,0,,el futuro mucho mejor
+Dialogue: 0,0:00:03.44,0:00:04.70,Caption,,0,0,0,,que un policía puede,
+Dialogue: 0,0:00:05.06,0:00:05.90,Caption,,0,0,0,,y por eso él
+Dialogue: 0,0:00:05.90,0:00:07.12,Caption,,0,0,0,,puede robar bancos y
+Dialogue: 0,0:00:07.12,0:00:07.96,Caption,,0,0,0,,Aléjate.
+Dialogue: 0,0:00:08.64,0:00:09.82,Caption,,0,0,0,,En otras palabras,
+Dialogue: 0,0:00:09.82,0:00:11.38,Caption,,0,0,0,,laguién no es
+Dialogue: 0,0:00:11.38,0:00:13.02,Caption,,0,0,0,,necesariamente estúpido porque
+Dialogue: 0,0:00:13.02,0:00:14.58,Caption,,0,0,0,,tiene bajo coeficiente intelectual, es
+Dialogue: 0,0:00:14.58,0:00:15.86,Caption,,0,0,0,,bastante bien adaptado para
+Dialogue: 0,0:00:15.86,0:00:17.14,Caption,,0,0,0,,lo que hace, y
+Dialogue: 0,0:00:17.14,0:00:17.86,Caption,,0,0,0,,lo que hace es
+Dialogue: 0,0:00:17.86,0:00:19.12,Caption,,0,0,0,,para simular el futuro
+Dialogue: 0,0:00:19.12,0:00:21.42,Caption,,0,0,0,,de un crimen. Ahora,
+Dialogue: 0,0:00:21.46,0:00:22.60,Caption,,0,0,0,,pensar en cuando
+Dialogue: 0,0:00:22.60,0:00:25.08,Caption,,0,0,0,,encontrar la vida inteligente
+Dialogue: 0,0:00:25.08,0:00:26.32,Caption,,0,0,0,,que es más inteligente
+Dialogue: 0,0:00:26.32,0:00:27.86,Caption,,0,0,0,,que nosotros. Pueden
+Dialogue: 0,0:00:27.86,0:00:28.84,Caption,,0,0,0,,ver el mundo totalmente
+Dialogue: 0,0:00:28.84,0:00:30.48,Caption,,0,0,0,,diferente. El mundo puede
+Dialogue: 0,0:00:30.48,0:00:31.08,Caption,,0,0,0,,ser un mundo
+Dialogue: 0,0:00:31.08,0:00:32.54,Caption,,0,0,0,,olores, un mundo de
+Dialogue: 0,0:00:32.54,0:00:33.72,Caption,,0,0,0,,sonidos, en lugar de un
+Dialogue: 0,0:00:33.72,0:00:35.36,Caption,,0,0,0,,mundo de visión, como
+Dialogue: 0,0:00:35.36,0:00:36.52,Caption,,0,0,0,,nuestro cerebro está construido,
+Dialogue: 0,0:00:36.92,0:00:38.62,Caption,,0,0,0,,y lo más importante. Ellos
+Dialogue: 0,0:00:38.62,0:00:39.36,Caption,,0,0,0,,puede ser capaz de
+Dialogue: 0,0:00:39.36,0:00:40.16,Caption,,0,0,0,,véase el resultado
+Dialogue: 0,0:00:40.16,0:00:42.24,Caption,,0,0,0,,de futuros acontecimientos
+Dialogue: 0,0:00:42.24,0:00:44.04,Caption,,0,0,0,,mejor que nosotros. Lo harán.
+Dialogue: 0,0:00:44.04,0:00:45.00,Caption,,0,0,0,,ser capaz de realmente

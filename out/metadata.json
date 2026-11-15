@@ -1,0 +1,20 @@
+{
+  "input": "https://archive.org/download/youtube-Izp7q6OXXS4/Izp7q6OXXS4.mp4",
+  "language": "en",
+  "whisper_model": "base",
+  "moment": {
+    "start": 192.52,
+    "end": 237.52,
+    "title": "Clip",
+    "hook": "safe cracker can simulate the future much better than a cop ",
+    "reason": "speech-density heuristic",
+    "source": "fallback"
+  },
+  "target_lang": "es",
+  "translated": true,
+  "outputs": [
+    "captions.es.srt",
+    "clip_final.es.mp4",
+    "clip_final.mp4"
+  ]
+}
