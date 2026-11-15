@@ -62,12 +62,11 @@ python -m clipforge.pipeline --input /path/to/video.mp4 --target-lang es
 | `clip.yml` | The original ClipForge pipeline above: one video URL in, one captioned 9:16 clip out. |
 | `supoclip.yml` | Runs [our SupoClip fork](https://github.com/superz1402/supoclip) (AGPL) on the runner via Docker Compose: LLM moment picking, virality scores, styled karaoke captions. Adds `CAPTION_TRANSLATE_TO` (fork feature) for translated captions via the local LLM. Key-free: local whisper + Ollama. |
 | `english.yml` | English caption pass for externally picked windows (e.g. SupoClip `clips.json`): cut, reframe, transcribe, LLM-translate, burn. |
-| `generate.yml` | MoneyPrinterTurbo (pinned) fully key-free: local LLM script, edge-tts voice, Mixkit-scraped stock footage (no API key), composed short. |
+| `generate.yml` | MoneyPrinterTurbo (pinned) fully key-free: local LLM script, edge-tts voice, Mixkit-scraped stock footage (no API key), composed short. Runs daily via cron (topic auto-picked from `topics.txt`) or on demand. Optional YouTube auto-upload: set repo variable `YOUTUBE_UPLOAD_ENABLED=true` plus secrets `YT_CLIENT_ID`, `YT_CLIENT_SECRET`, `YT_REFRESH_TOKEN` (OAuth consent screen must be published to production, or the refresh token expires weekly). |
 
 ## Roadmap
 
 - Multiple ranked clips per run
-- Direct upload / publish step to our own channel
 - Packaging as a hosted service
 
 ## Credits

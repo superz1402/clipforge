@@ -4,8 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       subject:
-        description: "Video topic"
-        required: true
+        description: "Video topic (empty = auto-pick from topics.txt)"
+        required: false
+        default: ""
       language:
         description: "Script language code"
         required: false
@@ -26,10 +27,17 @@ on:
         description: "Comma-separated stock footage search terms (Mixkit, key-free). Empty = use the subject."
         required: false
         default: ""
+      privacy:
+        description: "YouTube privacy if upload enabled (cron runs always upload public)"
+        required: false
+        default: "private"
       mpt_commit:
         description: "MoneyPrinterTurbo commit (pinned)"
         required: false
         default: "ce289ffb61a118779c56d6b4a34181905dbed2b9"
+  schedule:
+    # Daily 13:30 UTC = 7:00 PM IST
+    - cron: "30 13 * * *"
 
 jobs:
   generate:
@@ -74,6 +82,16 @@ jobs:
           done
           ollama pull "${{ inputs.llm_model }}"
 
+      - name: Pick topic
+        run: |
+          SUBJECT="${{ inputs.subject }}"
+          if [ -z "$SUBJECT" ]; then
+            N=$(wc -l < topics.txt)
+            SUBJECT=$(sed -n "$(( (10#$(date -u +%j) % N) + 1 ))p" topics.txt)
+          fi
+          echo "SUBJECT=$SUBJECT" >> "$GITHUB_ENV"
+          echo "topic: $SUBJECT"
+
       - name: Configure MoneyPrinterTurbo
         working-directory: MoneyPrinterTurbo
         run: |
@@ -86,7 +104,7 @@ jobs:
         if: inputs.stop_at == 'video'
         run: |
           QUERIES="${{ inputs.material_queries }}"
-          if [ -z "$QUERIES" ]; then QUERIES="${{ inputs.subject }}"; fi
+          if [ -z "$QUERIES" ]; then QUERIES="$SUBJECT"; fi
           python scripts/scrape_materials.py --queries "$QUERIES" --count 5 --outdir materials
           MATS=$(ls "$PWD"/materials/*.mp4 | paste -sd,)
           echo "MATS=$MATS" >> "$GITHUB_ENV"
@@ -100,7 +118,7 @@ jobs:
             SOURCE_ARGS="--video-source local"
           fi
           python cli.py \
-            --video-subject "${{ inputs.subject }}" \
+            --video-subject "$SUBJECT" \
             --video-language "${{ inputs.language }}" \
             --voice-name "${{ inputs.voice }}" \
             $SOURCE_ARGS \
@@ -112,6 +130,30 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: mpt-output
+          name: mpt-output-${{ github.run_id }}
           path: MoneyPrinterTurbo/storage/tasks/
           if-no-files-found: warn
+
+      # YouTube upload: inactive until repo variable YOUTUBE_UPLOAD_ENABLED=true
+      # and secrets YT_CLIENT_ID / YT_CLIENT_SECRET / YT_REFRESH_TOKEN are set.
+      # Manual dispatches upload private (smoke test); daily cron uploads public.
+      - name: Install YouTube upload dependencies
+        if: vars.YOUTUBE_UPLOAD_ENABLED == 'true' && inputs.stop_at == 'video'
+        run: pip install google-api-python-client google-auth
+
+      - name: Upload to YouTube
+        if: vars.YOUTUBE_UPLOAD_ENABLED == 'true' && inputs.stop_at == 'video'
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          PRIVACY: ${{ inputs.privacy || 'public' }}
+        run: |
+          VIDEO=$(ls MoneyPrinterTurbo/storage/tasks/*/final-*.mp4 | head -1)
+          TITLE=$(echo "$SUBJECT" | cut -c1-90)
+          python scripts/youtube_upload.py \
+            --file "$VIDEO" \
+            --title "$TITLE #Shorts" \
+            --description "$SUBJECT. New short every day. #Shorts #facts #animals" \
+            --tags "facts,shorts,animals" \
+            --privacy "$PRIVACY"
