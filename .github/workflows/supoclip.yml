@@ -1,0 +1,135 @@
+name: SupoClip pipeline
+
+# Runs upstream SupoClip (AGPL-3.0, pinned commit) on the Actions runner via
+# Docker Compose, fully key-free: local whisper transcription + local Ollama
+# LLM for moment selection. No SupoClip code is copied into this repo.
+
+on:
+  workflow_dispatch:
+    inputs:
+      video_url:
+        description: "Direct URL to the source video (mp4). GitHub release asset API URLs are supported."
+        required: true
+      whisper_model:
+        description: "Whisper model size (tiny/base/small/medium)"
+        required: false
+        default: "base"
+      clip_length:
+        description: "Clip length preset (auto/short/medium/long)"
+        required: false
+        default: "auto"
+      poll_timeout_minutes:
+        description: "Max minutes to wait for processing"
+        required: false
+        default: "240"
+
+permissions:
+  contents: read
+
+jobs:
+  supoclip:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - name: Check out clipforge (driver script)
+        uses: actions/checkout@v4
+
+      - name: Check out SupoClip (pinned)
+        uses: actions/checkout@v4
+        with:
+          repository: FujiwaraChoki/supoclip
+          ref: 9da828924cb646d8cbad1395c86c726fe907cc8a
+          path: supoclip
+
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL || true
+          docker image prune -af || true
+          df -h /
+
+      - name: Configure SupoClip .env (key-free)
+        working-directory: supoclip
+        run: |
+          cp .env.example .env
+          set_kv() { sed -i "s|^$1=.*|$1=$2|" .env; grep -q "^$1=" .env || echo "$1=$2" >> .env; }
+          set_kv TRANSCRIPTION_PROVIDER whisper
+          set_kv WHISPER_MODEL_SIZE "${{ inputs.whisper_model }}"
+          set_kv LLM "ollama:qwen2.5:3b"
+          set_kv OLLAMA_BASE_URL "http://host.docker.internal:11434/v1"
+          set_kv BACKEND_CPU_ONLY true
+          set_kv SELF_HOST true
+          set_kv BACKEND_AUTH_SECRET "ci-local-auth-secret"
+          set_kv APP_SETTINGS_ENCRYPTION_KEY "ci-local-encryption-key-0123456789abcdef"
+          set_kv BETTER_AUTH_SECRET "ci-local-better-auth-secret"
+          set_kv DEFAULT_PROCESSING_MODE fast
+          grep -E '^(TRANSCRIPTION_PROVIDER|WHISPER_MODEL_SIZE|LLM|OLLAMA_BASE_URL|BACKEND_CPU_ONLY)=' .env
+
+      - name: Install Ollama and pull the LLM
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          nohup ollama serve >/tmp/ollama.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://localhost:11434/api/version && break || sleep 2; done
+          ollama pull qwen2.5:3b
+
+      - name: Build and start SupoClip (backend + worker + db)
+        working-directory: supoclip
+        run: |
+          docker compose up -d --build backend worker
+          docker compose ps
+
+      - name: Wait for backend health
+        run: |
+          for i in $(seq 1 90); do
+            curl -sf http://localhost:8000/health && exit 0
+            sleep 5
+          done
+          echo "backend never became healthy"; docker ps -a; exit 1
+
+      - name: Seed CI user into postgres
+        run: |
+          docker exec supoclip-postgres psql -U supoclip -d supoclip -c \
+            "INSERT INTO users (id, name, email, \"emailVerified\") VALUES ('ci-user-0001', 'CI Runner', 'ci@example.invalid', true) ON CONFLICT (id) DO NOTHING;"
+
+      - name: Download source video
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VIDEO_URL: ${{ inputs.video_url }}
+        run: |
+          if [[ "$VIDEO_URL" == *api.github.com* ]]; then
+            curl -fL --retry 3 -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/octet-stream" "$VIDEO_URL" -o video.mp4
+          else
+            curl -fL --retry 3 "$VIDEO_URL" -o video.mp4
+          fi
+          ls -lh video.mp4
+
+      - name: Run SupoClip task
+        env:
+          SUPOCLIP_AUTH_SECRET: ci-local-auth-secret
+          SUPOCLIP_USER_ID: ci-user-0001
+          VIDEO_FILE: video.mp4
+          OUT_DIR: clips
+          CLIP_LENGTH: ${{ inputs.clip_length }}
+        run: |
+          export POLL_TIMEOUT_SECONDS=$(( ${{ inputs.poll_timeout_minutes }} * 60 ))
+          python -m pip install -q requests
+          python scripts/supoclip_run.py
+
+      - name: Upload clip artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: supoclip-clips-${{ github.run_id }}
+          path: clips/
+          if-no-files-found: warn
+
+      - name: Dump compose logs on failure
+        if: failure()
+        working-directory: supoclip
+        run: |
+          docker compose logs --tail=200 backend || true
+          docker compose logs --tail=200 worker || true
+
+      - name: Tear down
+        if: always()
+        working-directory: supoclip
+        run: docker compose down -v || true
