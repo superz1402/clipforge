@@ -78,7 +78,7 @@ def main():
 
     if args.script_file:
         # pre-approved script: use verbatim, skip the LLM
-        beats = clean_lines(open(args.script_file).read())[:10]
+        beats = clean_lines(open(args.script_file).read())[:16]
         print(f"using provided script ({len(beats)} beats)")
     else:
         script_raw = ollama(SCRIPT_PROMPT.format(subject=args.subject), args.model, args.base_url)
