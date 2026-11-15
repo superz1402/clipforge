@@ -22,6 +22,10 @@ on:
         description: "Stop after stage (script|terms|audio|subtitle|materials|video)"
         required: false
         default: "video"
+      material_queries:
+        description: "Comma-separated stock footage search terms (Mixkit, key-free). Empty = use the subject."
+        required: false
+        default: ""
       mpt_commit:
         description: "MoneyPrinterTurbo commit (pinned)"
         required: false
@@ -70,23 +74,34 @@ jobs:
 
       - name: Configure MoneyPrinterTurbo
         working-directory: MoneyPrinterTurbo
-        env:
-          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
         run: |
           cp config.example.toml config.toml
           sed -i 's/^llm_provider = .*/llm_provider = "ollama"/' config.toml
           sed -i 's/^ollama_model_name = .*/ollama_model_name = "${{ inputs.llm_model }}"/' config.toml
-          sed -i "s|^pexels_api_keys = .*|pexels_api_keys = [\"$PEXELS_API_KEY\"]|" config.toml
-          sed -i 's/^video_source = .*/video_source = "pexels"/' config.toml
+          sed -i 's/^video_source = .*/video_source = "local"/' config.toml
+
+      - name: Scrape stock footage (key-free, Mixkit)
+        if: inputs.stop_at == 'video'
+        run: |
+          QUERIES="${{ inputs.material_queries }}"
+          if [ -z "$QUERIES" ]; then QUERIES="${{ inputs.subject }}"; fi
+          python scripts/scrape_materials.py --queries "$QUERIES" --count 5 --outdir materials
+          MATS=$(ls materials/*.mp4 | paste -sd,)
+          echo "MATS=$MATS" >> "$GITHUB_ENV"
 
       - name: Generate the short
         working-directory: MoneyPrinterTurbo
         run: |
+          if [ "${{ inputs.stop_at }}" = "video" ]; then
+            SOURCE_ARGS="--video-source local --video-materials $MATS"
+          else
+            SOURCE_ARGS="--video-source local"
+          fi
           python cli.py \
             --video-subject "${{ inputs.subject }}" \
             --video-language "${{ inputs.language }}" \
             --voice-name "${{ inputs.voice }}" \
-            --video-source pexels \
+            $SOURCE_ARGS \
             --video-aspect 9:16 \
             --stop-at "${{ inputs.stop_at }}" \
             --task-id 11111111-1111-4111-8111-111111111111
