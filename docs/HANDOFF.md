@@ -72,3 +72,14 @@ in GitHub + the user's Instinct vault.
 ## User's standing rules
 - Zero spend, no paid API keys. Public go-live approved Nov 15 ("Yup, approved").
 - He judges footage quality harshly - always gate-check frames before celebrating.
+
+## Script quality standard (Nov 15, user's verdict)
+His verdict on the first bird short: "scripting was not good, doesn't feel informational,
+too short to get clarity." He then confirmed the standard for ALL videos: explain why/how,
+clear setup, proper explanation, takeaway - length follows the explanation. plan_video.py
+now enforces this (8-beat structure, 90-115 words). Approved scripts can be rendered
+verbatim via the workflow's `script` dispatch input (skips the LLM). The approved bird
+remake script is docs/scripts/birds-firecrackers-v3.txt.
+**Cron uploads are PAUSED to private** (PRIVACY default flipped in generate.yml, marked
+with a PAUSED comment) until he approves script quality - flip the default back to
+'public' once he does. Daily runs keep producing drafts privately in the meantime.
