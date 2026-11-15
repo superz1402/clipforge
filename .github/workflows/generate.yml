@@ -146,6 +146,12 @@ jobs:
           cp config.example.toml config.toml
           sed -i 's/^llm_provider = .*/llm_provider = "ollama"/' config.toml
           sed -i 's/^ollama_model_name = .*/ollama_model_name = "${{ inputs.llm_model }}"/' config.toml
+          # longer narrations (60-90s) blow past MPT's default 30s edge-tts stream guard
+          if grep -q '^edge_tts_timeout' config.toml; then
+            sed -i 's/^edge_tts_timeout = .*/edge_tts_timeout = 600/' config.toml
+          else
+            printf '\nedge_tts_timeout = 600\n' >> config.toml
+          fi
           sed -i 's/^video_source = .*/video_source = "local"/' config.toml
           # Engagement: sequential footage matching the narration beats, quick cuts
           sed -i -E 's|^#? *video_concat_mode = .*|video_concat_mode = "sequential"|' config.toml
