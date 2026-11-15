@@ -31,6 +31,10 @@ on:
         description: "Pre-approved script, one sentence per line. Skips LLM script generation."
         required: false
         default: ""
+      footage_label:
+        description: "Small persistent on-screen label (e.g. 'illustrative footage') when stock clips are not the exact species/event"
+        required: false
+        default: ""
       privacy:
         description: "YouTube privacy if upload enabled"
         required: false
@@ -181,7 +185,9 @@ jobs:
           HOOK_TEXT=""
           if [ "$PLANNED" = "yes" ] && [ -f plan/beats.txt ]; then HOOK_TEXT=$(head -1 plan/beats.txt); fi
           if [ -n "$HOOK_TEXT" ]; then
-            python scripts/hook_overlay.py --video "$TASKDIR/final-1.mp4" --srt "$TASKDIR/subtitle.srt" --out "$TASKDIR/final-1-hook.mp4" --text "$HOOK_TEXT"
+            LABEL_ARG=""
+            if [ -n "${{ inputs.footage_label }}" ]; then LABEL_ARG="--label "${{ inputs.footage_label }}""; fi
+            eval python scripts/hook_overlay.py --video "$TASKDIR/final-1.mp4" --srt "$TASKDIR/subtitle.srt" --out "$TASKDIR/final-1-hook.mp4" --text "$HOOK_TEXT" $LABEL_ARG
           else
             python scripts/hook_overlay.py --video "$TASKDIR/final-1.mp4" --srt "$TASKDIR/subtitle.srt" --out "$TASKDIR/final-1-hook.mp4"
           fi

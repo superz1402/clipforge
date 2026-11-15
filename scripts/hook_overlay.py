@@ -24,11 +24,12 @@ WrapStyle: 0
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: Hook,DejaVu Sans,78,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,-1,0,0,0,100,100,1,0,1,5,0,8,50,50,320,1
+Style: FootageLabel,DejaVu Sans,34,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,1,9,50,40,60,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 Dialogue: 0,{start},{end},Hook,,0,0,0,,{text}
-"""
+{label_event}"""
 
 
 def first_cue(srt_path):
@@ -51,6 +52,14 @@ def first_cue(srt_path):
     return None
 
 
+def probe_duration(video):
+    out = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+         "-of", "default=noprint_wrappers=1:nokey=1", video],
+        capture_output=True, text=True, check=True)
+    return float(out.stdout.strip())
+
+
 def ass_time(t):
     cs = int(round(t * 100))
     return f"{cs // 360000}:{(cs // 6000) % 60:02d}:{(cs // 100) % 60:02d}.{cs % 100:02d}"
@@ -62,6 +71,7 @@ def main():
     p.add_argument("--srt", required=True)
     p.add_argument("--out", required=True)
     p.add_argument("--text", default="", help="hook text override (default: first srt cue)")
+    p.add_argument("--label", default="", help="small persistent label (e.g. illustrative footage), top-right, full duration")
     a = p.parse_args()
 
     if a.text.strip():
@@ -85,7 +95,11 @@ def main():
         print("empty hook text; skipped")
         return 0
 
-    ass = ASS_TEMPLATE.format(start=ass_time(start), end=ass_time(end), text=text)
+    label_event = ""
+    if a.label.strip():
+        dur = probe_duration(a.video)
+        label_event = f"Dialogue: 1,0:00:00.00,{ass_time(dur)},FootageLabel,,0,0,0,,{a.label.strip()}\n"
+    ass = ASS_TEMPLATE.format(start=ass_time(start), end=ass_time(end), text=text, label_event=label_event)
     with tempfile.NamedTemporaryFile("w", suffix=".ass", delete=False, encoding="utf-8") as f:
         f.write(ass)
         ass_path = f.name
