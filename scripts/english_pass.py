@@ -51,6 +51,7 @@ def main():
     args = ap.parse_args()
 
     windows = json.loads(args.windows)
+    args.outdir = os.path.abspath(args.outdir)
     work = os.path.join(args.outdir, "work")
     os.makedirs(work, exist_ok=True)
     results = []
