@@ -27,8 +27,12 @@ on:
         description: "Comma-separated stock footage search terms (Mixkit, key-free). Empty = per-beat plan from the local LLM."
         required: false
         default: ""
+      script:
+        description: "Pre-approved script, one sentence per line. Skips LLM script generation."
+        required: false
+        default: ""
       privacy:
-        description: "YouTube privacy if upload enabled (cron runs always upload public)"
+        description: "YouTube privacy if upload enabled"
         required: false
         default: "private"
       mpt_commit:
@@ -95,7 +99,11 @@ jobs:
       - name: Plan script + per-beat footage (local LLM)
         if: inputs.stop_at == 'video' && inputs.material_queries == ''
         run: |
-          if python scripts/plan_video.py --subject "$SUBJECT" --model "${{ inputs.llm_model }}" --outdir plan; then
+          if [ -n "${{ inputs.script }}" ]; then
+            printf '%s\n' "${{ inputs.script }}" > plan_script.txt
+            SCRIPT_ARG="--script-file plan_script.txt"
+          fi
+          if python scripts/plan_video.py --subject "$SUBJECT" --model "${{ inputs.llm_model }}" --outdir plan $SCRIPT_ARG; then
             echo "PLANNED=yes" >> "$GITHUB_ENV"
           else
             echo "PLANNED=no" >> "$GITHUB_ENV"
@@ -202,7 +210,7 @@ jobs:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
-          PRIVACY: ${{ inputs.privacy || 'public' }}
+          PRIVACY: ${{ inputs.privacy || 'private' }}  # PAUSED: flip back to 'public' after script-quality approval
         run: |
           VIDEO=$(ls MoneyPrinterTurbo/storage/tasks/*/final-*.mp4 | head -1)
           TITLE=$(echo "$SUBJECT" | cut -c1-90)

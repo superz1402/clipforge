@@ -20,13 +20,18 @@ import re
 import sys
 import urllib.request
 
-SCRIPT_PROMPT = """Write a YouTube Shorts voiceover script about: {subject}.
+SCRIPT_PROMPT = """Write a YouTube Shorts voiceover script that clearly EXPLAINS the science of: {subject}.
 Rules:
-- 60 to 80 words total
-- exactly 6 short sentences
-- the first sentence is a hook under 12 words that creates curiosity
-- conversational, surprising facts, no intro or outro filler
-- output ONLY the 6 sentences, one per line, no numbering, no quotes"""
+- 90 to 115 words total
+- exactly 8 short sentences, one idea each
+- sentence 1 is a curious question hook under 14 words
+- sentence 2 grounds it with a concrete fact: a number, a study, or a striking scale
+- sentences 3-6 explain the actual mechanism step by step (what happens in the body or in nature, and WHY - cause and effect, not vague claims)
+- sentence 7 adds one surprising consequence or comparison
+- sentence 8 lands the takeaway in plain words
+- never claim an animal has superhuman senses unless that is literally true; prefer real mechanisms (reflexes, anatomy, behavior, studies)
+- conversational, no intro or outro filler
+- output ONLY the 8 sentences, one per line, no numbering, no quotes"""
 
 PHRASES_PROMPT = """Topic: {subject}
 Narration sentences:
@@ -67,18 +72,24 @@ def main():
     ap.add_argument("--subject", required=True)
     ap.add_argument("--model", default="qwen2.5:3b")
     ap.add_argument("--base-url", default="http://localhost:11434")
+    ap.add_argument("--script-file", default="", help="approved script, one sentence per line; skips LLM")
     ap.add_argument("--outdir", default="plan")
     args = ap.parse_args()
 
-    script_raw = ollama(SCRIPT_PROMPT.format(subject=args.subject), args.model, args.base_url)
-    beats = clean_lines(script_raw)[:6]
-    if len(beats) < 4:
-        # one retry with an even plainer instruction before giving up
-        print("first attempt unusable, retrying with plain prompt", file=sys.stderr)
-        retry = (f"Write exactly 6 short sentences about: {args.subject}. "
-                 "One sentence per line. No numbering, no intro, no titles.")
-        script_raw = ollama(retry, args.model, args.base_url)
-        beats = clean_lines(script_raw)[:6]
+    if args.script_file:
+        # pre-approved script: use verbatim, skip the LLM
+        beats = clean_lines(open(args.script_file).read())[:10]
+        print(f"using provided script ({len(beats)} beats)")
+    else:
+        script_raw = ollama(SCRIPT_PROMPT.format(subject=args.subject), args.model, args.base_url)
+        beats = clean_lines(script_raw)[:8]
+        if len(beats) < 4:
+            # one retry with an even plainer instruction before giving up
+            print("first attempt unusable, retrying with plain prompt", file=sys.stderr)
+            retry = (f"Write exactly 8 short sentences explaining the science of: {args.subject}. "
+                     "One sentence per line. No numbering, no intro, no titles.")
+            script_raw = ollama(retry, args.model, args.base_url)
+            beats = clean_lines(script_raw)[:8]
     if len(beats) < 4:
         print(f"script unusable ({len(beats)} beats)", file=sys.stderr)
         return 1
