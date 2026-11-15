@@ -1,0 +1,79 @@
+name: English caption pass
+
+# Takes windows picked elsewhere (e.g. SupoClip clips.json) and renders
+# English-captioned 9:16 clips from the source video: face-tracked reframe,
+# faster-whisper transcript, local Ollama LLM translation, karaoke burn-in.
+
+on:
+  workflow_dispatch:
+    inputs:
+      video_url:
+        description: "Direct URL to the source video (mp4). GitHub release asset API URLs are supported."
+        required: true
+      windows:
+        description: 'JSON list of [start_sec, end_sec] windows, e.g. [[52,77]]'
+        required: true
+      whisper_model:
+        description: "Whisper model size"
+        required: false
+        default: "small"
+      llm_model:
+        description: "Ollama model for translation"
+        required: false
+        default: "qwen2.5:7b"
+
+permissions:
+  contents: read
+
+jobs:
+  english-captions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core fonts-noto-core
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Install Ollama and pull the translation model
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          nohup ollama serve > ollama.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://localhost:11434/api/version && break || sleep 2; done
+          ollama pull "${{ inputs.llm_model }}"
+
+      - name: Download source video
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VIDEO_URL: ${{ inputs.video_url }}
+        run: |
+          if [[ "$VIDEO_URL" == *api.github.com* ]]; then
+            curl -fL --retry 3 -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/octet-stream" "$VIDEO_URL" -o video.mp4
+          else
+            curl -fL --retry 3 "$VIDEO_URL" -o video.mp4
+          fi
+          ls -lh video.mp4
+
+      - name: Render English-captioned clips
+        run: |
+          python scripts/english_pass.py \
+            --video video.mp4 \
+            --windows '${{ inputs.windows }}' \
+            --whisper-model "${{ inputs.whisper_model }}" \
+            --llm-model "${{ inputs.llm_model }}" \
+            --outdir out_en
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: english-clips-${{ github.run_id }}
+          path: out_en/
+          if-no-files-found: error
