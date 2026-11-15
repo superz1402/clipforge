@@ -26,6 +26,10 @@ on:
         description: "Ollama model for moment selection"
         required: false
         default: "qwen2.5:7b"
+      caption_translate_to:
+        description: "Translate burned captions to this language (e.g. English). Empty = source language."
+        required: false
+        default: "English"
       poll_timeout_minutes:
         description: "Max minutes to wait for processing"
         required: false
@@ -45,8 +49,8 @@ jobs:
       - name: Check out SupoClip (pinned)
         uses: actions/checkout@v4
         with:
-          repository: FujiwaraChoki/supoclip
-          ref: 9da828924cb646d8cbad1395c86c726fe907cc8a
+          repository: superz1402/supoclip
+          ref: 862a0e1ac5c46b1a206194c114b771f24c4b3805
           path: supoclip
 
       - name: Free disk space
@@ -64,6 +68,7 @@ jobs:
           set_kv WHISPER_MODEL_SIZE "${{ inputs.whisper_model }}"
           set_kv LLM "ollama:${{ inputs.llm_model }}"
           set_kv TRANSCRIPTION_LANGUAGE "${{ inputs.transcription_language }}"
+          set_kv CAPTION_TRANSLATE_TO "${{ inputs.caption_translate_to }}"
           set_kv OLLAMA_BASE_URL "http://host.docker.internal:11434/v1"
           set_kv BACKEND_CPU_ONLY true
           set_kv SELF_HOST true
