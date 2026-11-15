@@ -54,7 +54,9 @@ jobs:
         working-directory: MoneyPrinterTurbo
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt -r requirements-security.txt
+          # requirements-security.txt (pillow>=13) conflicts with moviepy's pillow<12 cap.
+          # Upstream marks it optional (uv --overrides); plain requirements.txt resolves fine.
+          pip install -r requirements.txt
 
       - name: Install Ollama and pull the script model
         run: |
