@@ -1,0 +1,11 @@
+{
+  "license": "https://www.pexels.com/license/",
+  "license_snapshot": "docs/licenses/evidence/pexels-license-page.txt",
+  "clips": [
+    {"id": "35610558", "creator": "claudio baroni", "page": "https://www.pexels.com/video/captivating-underwater-dolphin-group-swim-35610558/", "used": true},
+    {"id": "33768424", "creator": "Kemal Can", "page": "https://www.pexels.com/video/dolphins-swimming-in-open-ocean-waters-33768424/", "used": false, "reason": "dolphins not visible in sampled frames"},
+    {"id": "15546561", "creator": "Adrien JACTA", "page": "https://www.pexels.com/video/a-pod-of-dolphins-swimming-in-the-blue-sea-15546561/", "used": false, "reason": "dolphins too distant"},
+    {"id": "11042822", "creator": "Diana", "page": "https://www.pexels.com/video/dolphins-swimming-underwater-11042822/", "used": false, "reason": "captive pool visible (walls)"},
+    {"id": "11042832", "creator": "Diana", "page": "https://www.pexels.com/video/dolphin-group-swimming-in-blue-water-11042832/", "used": false, "reason": "captive pool visible (floor drain)"}
+  ]
+}
