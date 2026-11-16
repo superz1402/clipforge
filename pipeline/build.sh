@@ -4,6 +4,7 @@ set -e; P=$(cd "$(dirname "$0")"; pwd); S=$(realpath $1); V=$2; O=$3; M=$(realpa
 t0=$(date +%s)
 python3 $P/tts_kokoro.py $S $V . ; t1=$(date +%s)
 D=$(cat end.txt)
+python3 $P/align_words.py narr.wav words.json
 python3 $P/caps.py words.json $D "$H" cap.ass
 python3 $P/${ANIM:-birds_anim.py} anim.mp4 ; t2=$(date +%s)
 FO=$(python3 -c "print(max($D-3,0))")

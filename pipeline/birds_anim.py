@@ -4,7 +4,8 @@ END = float(open('end.txt').read()) + 0.05 if __import__('os').path.exists('end.
 ST = json.load(open('starts.json')) + [END]
 WORDS = json.load(open('words.json'))
 T_END = END
-t_closer = [o for o, d, w in WORDS if w.lower().startswith('closer')][0] - 0.5
+try: t_closer = [o for o, d, w in WORDS if w.lower().startswith('closer')][0] - 0.5
+except IndexError: t_closer = 0
 RNG = random.Random(7)
 
 def clamp(x, a=0, b=1): return max(a, min(b, x))

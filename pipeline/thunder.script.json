@@ -1,0 +1,39 @@
+{
+ "sentences": [
+  {
+   "text": "That flash overhead? The air inside it can get as hot as fifty thousand degrees Fahrenheit. That's five times hotter than the surface of the sun.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "But thunder isn't the lightning itself. It's the air.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "The flash heats nearby air in a split second. It expands so fast it compresses the air ahead of it, a shock wave, a bit like a sonic boom.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "Right after, the air cools and snaps back. That fast expansion and contraction is the sound wave we hear as thunder.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "A sharp crack means the bolt was close. A low rumble means it was several miles away or more. You hear the nearest part first, then the farther parts.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "And you can usually hear thunder only about ten miles out.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "So, if the sky can flash-heat air hotter than the sun, is thunder the sky showing off... or just yelling at us to go inside?",
+   "speed": 1.0,
+   "gap": 0.35
+  }
+ ]
+}
