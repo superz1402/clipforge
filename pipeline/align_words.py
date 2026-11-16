@@ -8,7 +8,7 @@ seg, _ = m.transcribe(wav, word_timestamps=True)
 W = [(w.start, w.end, w.word.strip()) for s in seg for w in s.words]
 ref = json.load(open(wj)); n = lambda x: re.sub(r'\W', '', x.lower()); i = 0; errs = []; hit = {}
 for s, e, w in W:
-    for j in range(i, min(i + 4, len(ref))):
+    for j in range(i, min(i + 10, len(ref))):
         if n(ref[j][2]) == n(w): errs.append(ref[j][0] - s); hit[j] = (s, e); i = j + 1; break
 out = []
 for j, (o, d, w) in enumerate(ref):

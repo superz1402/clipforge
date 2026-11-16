@@ -1,0 +1,39 @@
+{
+ "sentences": [
+  {
+   "text": "Sunlight looks white. So why is the sky blue?",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "Light travels in waves, and blue waves are shorter than red ones.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "When sunlight hits the air, tiny gas molecules scatter it in every direction. And blue is scattered more than the other colors.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "NOAA says blue scatters about four times more strongly than red. That's why blue is what we see most of the time.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "Near the horizon, the sky fades to a lighter blue or white. That light has passed through even more air, scattering again and again.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "At sunset the light takes an even longer path. The air scatters more of the blue wavelengths than the orange and red, and that gives the golden glow.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "So, if the sky is basically sunlight getting bounced around... is it showing off its color, or just really bad at keeping light in one place?",
+   "speed": 1.0,
+   "gap": 0.35
+  }
+ ]
+}
