@@ -1,5 +1,5 @@
 # Active next topic: why flamingos are pink
-Prepared2026-11-16,after explicit return-to-real-footage instruction. NOT rendered. No animation module created. Draft script pipeline/flamingo.script.json is fact-backed,not yet voiced or timed.
+Prepared2026-11-16,after explicit return-to-real-footage instruction. RENDERED 2026-11-16 as real-footage cut, see CREDITS.md. No animation module created. Draft script pipeline/flamingo.script.json is fact-backed,not yet voiced or timed.
 
 Facts checked in full:
 https://nationalzoo.si.edu/animals/news/why-are-flamingos-pink-and-other-flamingo-facts

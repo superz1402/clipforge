@@ -1,0 +1,11 @@
+{
+  "read_at": "2026-11-16",
+  "license": "https://www.pexels.com/license/",
+  "clips": [
+    {"key": "A", "page": "https://www.pexels.com/video/pink-flamingos-in-a-pond-8368094/", "title": "Pink Flamingos in a Pond", "author": "Nicky Pe", "author_page": "https://www.pexels.com/@nicky/", "official_download": "https://www.pexels.com/download/video/8368094/", "file_used": "https://videos.pexels.com/video-files/8368094/8368094-uhd_2560_1440_25fps.mp4", "file_url_source": "linked from the video page itself (Canva edit file-url parameter)", "dimensions": "2560x1440", "fps": 25, "duration_s": 20.56},
+    {"key": "C", "page": "https://www.pexels.com/video/a-group-of-flamingos-standing-in-the-water-24812188/", "title": "A Group of Flamingos Standing in the Water", "author": "Magda Ehlers", "author_page": "https://www.pexels.com/@magda-ehlers-pexels/", "official_download": "https://www.pexels.com/download/video/24812188/", "file_used": "https://videos.pexels.com/video-files/24812188/11897541_2560_1440_25fps.mp4", "file_url_source": "linked from the video page itself (Canva edit file-url parameter)", "dimensions": "2560x1440", "fps": 25, "duration_s": 39.32},
+    {"key": "E", "page": "https://www.pexels.com/video/flamingo-feeding-in-shallow-water-at-sunset-40078384/", "title": "Flamingo Feeding in Shallow Water at Sunset", "author": "Amit Rai", "official_download": "https://www.pexels.com/download/video/40078384/", "file_used": "https://videos.pexels.com/video-files/40078384/17109457_1920_1080_60fps.mp4", "file_url_source": "linked from the video page itself (Canva edit file-url parameter)", "dimensions": "1920x1080", "fps": 60, "duration_s": 31.63},
+    {"key": "B_not_used", "page": "https://www.pexels.com/video/wild-flamingo-feeding-in-park-close-up-38556974/", "title": "Wild Flamingo Feeding in Park Close-Up", "author": "Magda Ehlers", "note": "Downloaded and inspected; NOT used. Shows a captive blue feeding bin and a leg band; narration describes wild algae/brine-shrimp filter feeding, so this clip would mismatch the facts."},
+    {"key": "D_not_used", "page": "https://www.pexels.com/video/flamingos-standing-in-a-body-of-water-9106722/", "title": "Flamingos Standing in a Body of Water", "author": "Brixiv", "note": "Downloaded and inspected; NOT used. Leg bands visible on birds; paler zoo birds, weaker match."}
+  ]
+}
