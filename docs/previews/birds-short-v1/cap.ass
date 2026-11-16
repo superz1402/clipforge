@@ -1,0 +1,59 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,DejaVu Sans,80,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,-1,0,0,0,100,100,1,0,1,6,2,2,100,100,470,1
+Style: Hook,DejaVu Sans,70,&H0000E5FF,&H00FFFFFF,&H00000000,&H80000000,-1,0,0,0,100,100,1,0,1,6,0,8,50,50,260,1
+Style: Label,DejaVu Sans,28,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,1,9,50,60,60,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.08,0:00:01.42,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}BANG AND EVERY
+Dialogue: 0,0:00:01.42,0:00:02.16,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}BIRD NEARBY
+Dialogue: 0,0:00:02.16,0:00:02.94,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}VANISHES IN A
+Dialogue: 0,0:00:02.94,0:00:04.95,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}HEARTBEAT WHY
+Dialogue: 0,0:00:04.95,0:00:05.58,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}BECAUSE TO A
+Dialogue: 0,0:00:05.58,0:00:07.26,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}BIRD THAT BLAST
+Dialogue: 0,0:00:07.26,0:00:07.53,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}ISN'T A
+Dialogue: 0,0:00:07.53,0:00:08.81,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}CELEBRATION IT'S
+Dialogue: 0,0:00:08.81,0:00:09.31,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}A PREDATOR
+Dialogue: 0,0:00:09.31,0:00:10.69,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}ATTACK ITS
+Dialogue: 0,0:00:10.69,0:00:11.38,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}DANGER SYSTEM
+Dialogue: 0,0:00:11.38,0:00:12.38,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}FIRES STRESS
+Dialogue: 0,0:00:12.38,0:00:12.79,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}HORMONES
+Dialogue: 0,0:00:12.79,0:00:13.59,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}FLOOD IN AND
+Dialogue: 0,0:00:13.59,0:00:13.94,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}THE BODY
+Dialogue: 0,0:00:13.94,0:00:14.62,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}SCREAMS ONE
+Dialogue: 0,0:00:14.62,0:00:16.86,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}THING RUN AND
+Dialogue: 0,0:00:16.86,0:00:18.16,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}PANIC SPREADS
+Dialogue: 0,0:00:18.16,0:00:19.05,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}ONE BIRD TAKES
+Dialogue: 0,0:00:19.05,0:00:20.07,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}OFF HUNDREDS
+Dialogue: 0,0:00:20.07,0:00:21.16,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}FOLLOW BECAUSE
+Dialogue: 0,0:00:21.16,0:00:21.82,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}HESITATING
+Dialogue: 0,0:00:21.82,0:00:23.30,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}COULD BE FATAL
+Dialogue: 0,0:00:23.30,0:00:23.85,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}THE CLOSER THE
+Dialogue: 0,0:00:23.85,0:00:24.89,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}BLAST THE MORE
+Dialogue: 0,0:00:24.89,0:00:25.91,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}OF THEM BOLT
+Dialogue: 0,0:00:25.91,0:00:26.77,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}STUDIES OF MASS
+Dialogue: 0,0:00:26.77,0:00:27.43,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}TAKEOFFS SHOW
+Dialogue: 0,0:00:27.43,0:00:28.92,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}IT AT NIGHT
+Dialogue: 0,0:00:28.92,0:00:30.62,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}IT'S EVEN WORSE
+Dialogue: 0,0:00:30.62,0:00:32.02,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}THEY FLY BLIND
+Dialogue: 0,0:00:32.02,0:00:32.60,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}CRASH INTO
+Dialogue: 0,0:00:32.60,0:00:33.35,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}THINGS AND
+Dialogue: 0,0:00:33.35,0:00:34.27,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}BURN ENERGY
+Dialogue: 0,0:00:34.27,0:00:34.72,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}THEY CAN'T
+Dialogue: 0,0:00:34.72,0:00:36.95,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}SPARE SO IF
+Dialogue: 0,0:00:36.95,0:00:37.41,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}BIRDS COULD
+Dialogue: 0,0:00:37.41,0:00:38.28,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}VOTE WOULD
+Dialogue: 0,0:00:38.28,0:00:38.65,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}THEY BAN
+Dialogue: 0,0:00:38.65,0:00:39.74,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}FIRECRACKERS
+Dialogue: 0,0:00:39.74,0:00:40.59,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}OR JUST LIST
+Dialogue: 0,0:00:40.59,0:00:41.25,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}HUMANS AS A
+Dialogue: 0,0:00:41.25,0:00:41.66,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}NATURAL
+Dialogue: 0,0:00:41.66,0:00:42.60,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}DISASTER
+Dialogue: 1,0:00:00.10,0:00:04.40,Hook,,0,0,0,,WHY BIRDS PANIC\NAT FIRECRACKERS?
