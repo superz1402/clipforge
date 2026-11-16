@@ -1,0 +1,64 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,DejaVu Sans,80,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,-1,0,0,0,100,100,1,0,1,6,2,2,100,100,470,1
+Style: Hook,DejaVu Sans,70,&H0000E5FF,&H00FFFFFF,&H00000000,&H80000000,-1,0,0,0,100,100,1,0,1,6,0,8,50,50,260,1
+Style: Label,DejaVu Sans,28,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,1,9,50,60,60,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.10,0:00:01.67,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}BANG AND THE
+Dialogue: 0,0:00:01.67,0:00:02.29,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}BIRDS AROUND
+Dialogue: 0,0:00:02.29,0:00:02.92,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}YOU SCATTER IN
+Dialogue: 0,0:00:02.92,0:00:04.38,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}A HEARTBEAT
+Dialogue: 0,0:00:04.38,0:00:06.51,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}WHY BIRDS
+Dialogue: 0,0:00:06.51,0:00:07.07,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}DON'T KNOW IT'S
+Dialogue: 0,0:00:07.07,0:00:08.82,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}A CELEBRATION
+Dialogue: 0,0:00:08.82,0:00:09.56,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}TO THEM A
+Dialogue: 0,0:00:09.56,0:00:10.36,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}SUDDEN BLAST
+Dialogue: 0,0:00:10.36,0:00:10.90,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}CAN LOOK LIKE
+Dialogue: 0,0:00:10.90,0:00:13.16,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}DANGER DANGER
+Dialogue: 0,0:00:13.16,0:00:13.72,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}CAN TRIGGER A
+Dialogue: 0,0:00:13.72,0:00:14.40,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}FIGHT-OR-FLIGHT
+Dialogue: 0,0:00:14.40,0:00:15.30,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}RESPONSE AND
+Dialogue: 0,0:00:15.30,0:00:16.09,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}FOR A BIRD
+Dialogue: 0,0:00:16.09,0:00:16.61,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}FLIGHT IS THE
+Dialogue: 0,0:00:16.61,0:00:18.54,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}WAY OUT IT
+Dialogue: 0,0:00:18.54,0:00:20.45,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}CAN SPREAD TOO
+Dialogue: 0,0:00:20.45,0:00:20.95,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}WHEN SOME
+Dialogue: 0,0:00:20.95,0:00:22.00,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}BIRDS TAKE OFF
+Dialogue: 0,0:00:22.00,0:00:22.71,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}OTHERS NEARBY
+Dialogue: 0,0:00:22.71,0:00:24.82,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}MAY FOLLOW ON
+Dialogue: 0,0:00:24.82,0:00:25.75,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}NEW YEAR'S EVE
+Dialogue: 0,0:00:25.75,0:00:26.46,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}WEATHER RADAR
+Dialogue: 0,0:00:26.46,0:00:27.09,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}COUNTED ABOUT
+Dialogue: 0,0:00:27.09,0:00:27.60,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}A THOUSAND
+Dialogue: 0,0:00:27.60,0:00:28.28,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}TIMES MORE
+Dialogue: 0,0:00:28.28,0:00:29.11,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}BIRDS IN FLIGHT
+Dialogue: 0,0:00:29.11,0:00:29.65,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}THAN ON OTHER
+Dialogue: 0,0:00:29.65,0:00:31.30,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}NIGHTS AND THE
+Dialogue: 0,0:00:31.30,0:00:31.80,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}CLOSER THE
+Dialogue: 0,0:00:31.80,0:00:32.80,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}FIREWORKS THE
+Dialogue: 0,0:00:32.80,0:00:33.34,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}STRONGER THE
+Dialogue: 0,0:00:33.34,0:00:35.62,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}REACTION IN THE
+Dialogue: 0,0:00:35.62,0:00:36.28,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}DARK A
+Dialogue: 0,0:00:36.28,0:00:36.78,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}PANICKED
+Dialogue: 0,0:00:36.78,0:00:37.51,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}TAKEOFF CAN
+Dialogue: 0,0:00:37.51,0:00:38.14,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}LEAVE BIRDS
+Dialogue: 0,0:00:38.14,0:00:39.20,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}DISORIENTED
+Dialogue: 0,0:00:39.20,0:00:40.05,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}AND THAT BURNS
+Dialogue: 0,0:00:40.05,0:00:42.65,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}ENERGY SO IF
+Dialogue: 0,0:00:42.81,0:00:43.34,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}BIRDS COULD
+Dialogue: 0,0:00:43.34,0:00:44.05,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}VOTE WOULD
+Dialogue: 0,0:00:44.05,0:00:44.48,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}THEY BAN
+Dialogue: 0,0:00:44.48,0:00:45.49,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}FIRECRACKERS
+Dialogue: 0,0:00:45.49,0:00:46.25,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}OR JUST LIST
+Dialogue: 0,0:00:46.25,0:00:46.84,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}HUMANS AS A
+Dialogue: 0,0:00:46.84,0:00:47.25,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}NATURAL
+Dialogue: 0,0:00:47.25,0:00:48.81,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}DISASTER
+Dialogue: 1,0:00:00.10,0:00:04.40,Hook,,0,0,0,,WHY BIRDS PANIC\NAT FIREWORKS?
