@@ -1,110 +1,76 @@
-# WildWhyz ops handoff (Nov 15, 2026)
+# WildWhyz handoff (written 2026-11-16 ~08:31 IST, pre-expiry)
 
-Everything a fresh agent needs to operate this system cold. Read this file first.
+Everything needed to resume without redoing work. Repo: github.com/superz1402/clipforge
+(main @ this commit). GitHub auth: vault login "GitHub token" (sandbox_access=true);
+re-materialize with `tools vault write-file --name "GitHub token" --key password
+--return-channel whatsapp`, then git -c credential.helper pattern (username superz1402,
+password=$(cat ~/.vault/github-token-2ddc96/password)).
 
-## What this is
-Hands-free daily YouTube Shorts pipeline for the user's channel **WildWhyz** (animal-facts
-shorts, question-hook style modeled on IG accounts hoodieguyofficial1 / unhingedwildlife -
-ideas only, never their footage/audio). Zero cost, no paid API keys: everything runs on
-GitHub Actions free runners with local Ollama models. User is Android-only; all state lives
-in GitHub + the user's Instinct vault.
+## Current phase: awaiting user's verdict on short scripts + music picks
 
-## Repos (GitHub account superz1402)
-- **clipforge** - the pipeline (MIT). This repo. HEAD of main is current truth.
-- **supoclip** - AGPL fork of SupoClip with CAPTION_TRANSLATE_TO + CAPTION_NAMES_PACK
-  (Korean fan-channel caption translation; separate project, keep both repos green).
-- **perfect-srt** - ASR name-correction packs (living files; fold new mangles in as seen).
+Parent delivered (08:29 IST state): private review File with both short scripts,
+then both audio auditions (bird, then jellyfish). No answer yet. NOTHING is rendered,
+uploaded, or published since the music incident. Public hold remains.
 
-## Daily run chain
-1. `generate.yml` cron `30 13 * * *` (13:30 UTC = 7:00 PM IST). GitHub cron can lag 90+ min.
-2. `watchdog.yml` cron `50 13 * * *` dispatches generate.yml if no run started in 40 min.
-   Needs secret `WATCHDOG_PAT` (already set = his GitHub PAT; PAT expiry kills the watchdog -
-   re-set from vault item "github-token" if it ever 401s).
-3. Topic = `topics.txt` line `(day-of-year % 30) + 1`. Full mapping: `docs/content-calendar.md`.
+## Durable artifacts
 
-## Secrets / vault
-- GH secrets on clipforge: `YT_REFRESH_TOKEN`, `YT_CLIENT_ID`, `YT_CLIENT_SECRET`,
-  `WATCHDOG_PAT`. All set Nov 15.
-- Vault (user's Instinct): "github-token" (PAT, approved for sandbox use),
-  "WildWhyz YouTube client" (OAuth client id/secret), "WildWhyz YouTube refresh token".
-- **PENDING:** current refresh token has scope `youtube.upload` ONLY. A vault request link
-  was sent (via main) for a re-mint WITH `youtube.force-ssl` added. When the user submits it:
-  1. `tools vault write-file --name "WildWhyz YouTube refresh token" --key password` to the
-     sandbox file (`~/.vault/wildwhyz-youtube-refresh-token-*/password`).
-  2. Verify scope locally: exchange refresh_token for access_token, check
-     `tokeninfo.scope` contains BOTH `youtube.upload` and `youtube.force-ssl`.
-  3. Re-seal into GH secret `YT_REFRESH_TOKEN` (sodium sealed-box, same pattern as WATCHDOG_PAT).
-  4. Then delete the bad public video `dQiGs9m8HcA` via `videos.delete` and confirm to main.
+1. Short scripts (awaiting approval):
+   - docs/scripts/birds-firecrackers-v5-short.txt (104 words, TTS-measured 44.064s)
+   - docs/scripts/jellyfish-immortal-v2-short.txt (123 words, TTS-measured 53.304s)
+   - Also published as a PRIVATE review File (both in one place):
+     https://files.instinct.com/nlwzjdfrntcb-short-scripts-bird-44s-jelly-53s
+     (fileId file-01M7GTYPTXGYZ5FAC328SVRKZV, generation 2)
+2. Narration (regenerable + committed): assets/audio/short-scripts/bird-v5-narration.mp3,
+   jelly-v2-narration.mp3. Recipe: edge-tts 7.3.1, voice en-US-BrianMultilingualNeural,
+   plain read of the script file. Durations are the timing proofs.
+3. Music auditions (committed): assets/audio/short-scripts/bird-v5-audition.mp3,
+   jelly-v2-audition.mp3. Recipe: music atrim to narration length, 1.5s fade-in,
+   3s fade-out, volume 0.5, sidechaincompress threshold=0.03 ratio=10 attack=15
+   release=500 keyed by narration, amix normalize=0, 192k.
+4. Music picks + license chain (docs/MUSIC-SOURCING.md, docs/licenses/):
+   - bird: "Morning" Kevin MacLeod, CC BY 4.0, per-track evidence
+     https://incompetech.com/music/royalty-free/index.html?isrc=USUAN2300003
+   - jellyfish: "Dream Culture" Kevin MacLeod, CC BY 4.0,
+     https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1300046
+   - 6 alternates with full records in docs/licenses/candidates/.
+   - Final credits MUST include the change note (see each candidate .md).
+5. Fail-closed music state (commit 13d6664): generate.yml passes --bgm-type none AND
+   deletes MPT resource/songs/*.mp3 at configure. Policy: docs/MUSIC.md.
+6. Clean long masters (narration-only, release assets):
+   https://github.com/superz1402/clipforge/releases/tag/preview-jellyfish-v3
+   - bird-final-clean.mp4 (129MB; video stream MD5-identical to private preview QlXKY0SRXv8)
+   - jellyfish-final-v3.mp4 (music-free by construction)
+   These are the LONG versions (1:57 / 1:29); superseded by short scripts if he approves.
+7. Jellyfish footage vetting: docs/previews/jellyfish-immortal/SOURCES.md (NOAA
+   archive.org trim map), build.sh reproduces the local jellyfish build.
+8. Crons/watchdog in generate.yml: DISABLED in YAML. Do not re-enable without user go.
 
-## Uploads so far
-- PUBLIC bad v1 `dQiGs9m8HcA` (cars/B&W park footage - user told to delete manually; delete
-  via API once force-ssl lands).
-- PUBLIC good `NZZY99Wh8dM` (birds/firecrackers, verified frame-by-frame, ~24s).
-- Private samples: octopus v4 `toSDEHipg0Y`, v5 `yLjseqCVB14`, cats `B9QsfBgkF4Y`.
+## Open items needing HIS decision (not agent-decidable)
 
-## Known fragility
-- **Planner LLM (qwen2.5:3b) is flaky** (~1 in 3 runs produces an unusable script; one-retry
-  added Nov 15). Fallback path still ships a decent video but without the hook-title overlay
-  and per-beat footage ordering. If a run's log says `PLANNED=no`, that's what happened.
-- **Mixkit animal coverage** (clips per query): zero for clownfish, salmon, otter,
-  mantis-shrimp, squirrel, raccoon, snail, peacock, swan, duck, firefly; hummingbird only 2.
-  Never add topics needing those unless a NOAA archive.org fallback is wired (ident prefix
-  `noaa-oe-video-`; same IA collection contains junk B&W NPS items - filter by prefix).
-- GH artifacts with the same name across runs merge stale files - artifact names are
-  unique per run (`mpt-output-<run_id>`); keep it that way.
-- edge-tts: `AndrewMultilingualNeural` is broken server-side; voice is
-  `en-US-BrianMultilingualNeural`, edge_tts pinned 7.3.1.
-- MPT pinned commit ce289ffb; CLI flags override config.toml for concat mode/duration.
+- Verdict on short scripts (File) and music picks/auditions.
+- The blocked public bird Short (HAAWK claim on the old music version): replace or
+  delete - his call. Claim details: audio "Relaxing Peaceful Piano And Guitar - Praded",
+  owner "HAAWK for a 3rd Party", blocked globally, notice dated Nov 15 2026.
+- Junk preview cleanup (wwfYnlxKZaI, qNJUkmW09ok, dQiGs9m8HcA) - deletion authority
+  still pending.
+- YouTube daily upload cap state: UNVERIFIED. No upload retries were scheduled;
+  verify live before any upload resume.
 
-## Gate-check procedure (every daily run, before telling the user it's good)
-1. Run is green: `gh api repos/superz1402/clipforge/actions/runs?per_page=3`.
-2. Download artifact, extract grid.jpg/hook.jpg, LOOK at the frames (footage matches topic,
-   captions low/legible, no off-topic clips). Trust pixels, not logs.
-3. Check `PLANNED=yes/no` in the log and say which path ran when reporting.
-4. Report to main with run URL + youtu.be URL + verdict + clip attached (compress
-   `ffmpeg -crf 26 -preset medium -c:a aac -b:a 96k` to fit 20 MB).
+## If he approves (continuation recipe)
 
-## Open user requests (not pipeline bugs)
-- He has 30+ pre-made shorts on his Drive he wants drip-fed. Main asked which channel +
-  folder link; unanswered as of Nov 15 8:45 PM. Route via main when he answers.
-- K-pop fan channel (supoclip side): SBS-copyrighted clips, not monetizable, side project.
+1. Render each short: narration mp3 + approved music mix (recipe in section 3),
+   NOAA/archive.org footage per SOURCES.md pattern, hook overlay + captions
+   (scripts/hook_overlay.py, clipforge/captions.py), --bgm-type none stays.
+2. Verify actual frames visually before delivery (he catches substitution; check the
+   EXACT delivered file, not a lookalike - see galah/cockatoo lesson).
+3. Private YouTube preview only. Public only on his explicit go.
+4. Video description must carry the change-indicated music credit (candidate .md files).
+5. "Illustrative footage" label on generic species footage (standing preference).
 
-## User's standing rules
-- Zero spend, no paid API keys. Public go-live approved Nov 15 ("Yup, approved").
-- He judges footage quality harshly - always gate-check frames before celebrating.
+## Science sources for the short scripts
 
-## Script quality standard (Nov 15, user's verdict)
-His verdict on the first bird short: "scripting was not good, doesn't feel informational,
-too short to get clarity." He then confirmed the standard for ALL videos: explain why/how,
-clear setup, proper explanation, takeaway - length follows the explanation. plan_video.py
-now enforces this (8-beat structure as a guide, ~90-115 words, longer when the explanation needs it). Approved scripts can be rendered
-verbatim via the workflow's `script` dispatch input (skips the LLM). The approved bird
-remake script is docs/scripts/birds-firecrackers-v3.txt.
-**Cron uploads are PAUSED to private** (PRIVACY default flipped in generate.yml, marked
-with a PAUSED comment) until he approves script quality - flip the default back to
-'public' once he does. Daily runs keep producing drafts privately in the meantime.
-
-## WORKFLOW CHANGE (Nov 15, 11:45 PM, his explicit instruction)
-"tell me the questions, I will provide you it's research and on that you write the video
-script and generate the video." He rejected our auto-researched script. New contract:
-1. The 30-day calendar now supplies QUESTIONS for him, one at a time via main.
-2. He replies with his research. We write the script FROM HIS MATERIAL only, cautious
-   wording where his text lacks direct evidence; flag gaps to him, don't silently swap
-   in a different narrative.
-3. Script goes to him for review. On approval, dispatch generate.yml with the `script`
-   input (verbatim beats), upload PRIVATE, gate-check frames, report the private preview.
-4. Public ONLY on his explicit go. The PRIVACY default stays 'private'.
-Both cron schedules (generate 13:30 UTC + watchdog 13:50 UTC) are DISABLED in the
-workflow files - nothing runs unattended anymore.
-Current state: bird script v4 (docs/scripts/birds-firecrackers-v4.txt) written from his
-research, render dispatched private. Next question for him when he's ready:
-"How can the jellyfish Turritopsis dohrnii live forever?" (Nov 16 slot, line 21).
-
-## PERMANENT STYLE RULE (Nov 15, his words, applies to EVERY video)
-"No need to explain we are not teachers we explain the scientific part and end it with
-a question for watcher making them make sure they answer or comment either sarcastic
-something or something knowledgeable (make this a permanent rule for everything video)."
-Every script: entertaining hook, accessible science (no lecture/teacher tone, no extended
-caveat sermons - fold qualifications in naturally), and END WITH A POINTED VIEWER
-QUESTION inviting jokes or debate. This supersedes takeaway-style endings, never factual
-accuracy. Baked into plan_video.py's SCRIPT_PROMPT.
+- Bird: https://esajournals.onlinelibrary.wiley.com/doi/10.1002/fee.2694 (Hoekstra 2024:
+  mass takeoff, anti-predator response to sudden noise, distance-dependent disturbance)
+- Jellyfish: https://www.nhm.ac.uk/discover/immortal-jellyfish-secret-to-cheating-death.html
+  + https://en.wikipedia.org/wiki/Turritopsis_dohrnii (transdifferentiation, predation/
+  disease mortality, no proven individual immortality)
