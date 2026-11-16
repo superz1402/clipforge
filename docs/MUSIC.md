@@ -24,5 +24,7 @@ workflow never set a bgm option, so every render carried one of these tracks.
 ## License records
 
 `docs/licenses/` - one file per track: source URL, license text/version, date saved,
-attribution string, and where the track was used. Empty as of Nov 16 2026 = no music
-in any video.
+attribution string, and where the track was used.
+`docs/licenses/candidates/` - staged CC BY 4.0 candidates (Kevin MacLeod) awaiting
+the user's pick; see docs/MUSIC-SOURCING.md for the sourcing route. Candidates are
+not used in any video until picked.
