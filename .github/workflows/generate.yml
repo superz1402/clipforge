@@ -168,13 +168,19 @@ jobs:
           sed -i -E 's|^#? *stroke_width = .*|stroke_width = 4|' config.toml
           sed -i -E 's|^#? *subtitle_position = .*|subtitle_position = "custom"|' config.toml
           sed -i -E 's|^#? *custom_position = .*|custom_position = 72.0|' config.toml
+          # Music: fail-closed OFF. MPT's bundled resource/songs tracks are untagged with
+          # unverified provenance; a random pick was copyright-claimed (HAAWK, Nov 16 2026).
+          # --bgm-type none is also passed at generation; emptying the library means even a
+          # lost flag falls back to no music (MPT logs "no background music files found").
+          rm -f resource/songs/*.mp3
 
       - name: Generate the short
         working-directory: MoneyPrinterTurbo
         run: |
           ARGS=(--video-subject "$SUBJECT"
                 --video-language "${{ inputs.language }}"
-                --voice-name "${{ inputs.voice }}")
+                --voice-name "${{ inputs.voice }}"
+                --bgm-type none)
           if [ "$PLANNED" = "yes" ] && [ -f ../plan/script.txt ]; then
             ARGS+=(--video-script "$(cat ../plan/script.txt)")
           fi
