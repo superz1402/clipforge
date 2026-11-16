@@ -1,0 +1,39 @@
+{
+ "sentences": [
+  {
+   "text": "The Moon spins. So why do we only ever see one side of it?",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "It spins once on its axis in exactly the time it takes to orbit Earth once, about twenty-seven days. NASA calls that synchronous rotation.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "Picture a dancer circling a partner, always facing them. The Moon never turns its back to us.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "If it didn't spin at all, or spun at any other rate, we'd see different parts of it through the month.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "This is called tidal locking, and it's common. All the large moons in our solar system are locked to their planets.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "And the far side isn't always dark. It gets sunlight too. At new Moon, the far side is the sunny one.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "So, if the Moon keeps staring at us all month... is it keeping an eye on us, or just too shy to turn around?",
+   "speed": 1.0,
+   "gap": 0.35
+  }
+ ]
+}

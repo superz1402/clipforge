@@ -20,13 +20,14 @@ def ground(c): hills(c, (0.03, 0.03, 0.06))
 def s1(c, t):
     sky(c, *STORM); cloud(c, 540, 480, 1.4); ground(c)
     ph = t % 2.2
+    bolt(c, 540, 560, 600, 1500, int(t // 2.2), 0.18, 8)
     if ph < 0.35:
         c.set_source_rgba(1, 1, 1, 0.25 * (1 - ph / 0.35)); c.paint()
         bolt(c, 540, 560, 600, 1500, int(t // 2.2), 1 - ph / 0.35)
     if t < 4.2: text(c, 'BANG', 540, 1000, 140, (1, 0.9, 0.4), alpha=prog(t, 3.0, 3.2)) if False else None
 def s2(c, t):
     sky(c, *STORM); ground(c); base = 1180
-    g1 = prog(t, 0.4, 1.4); g2 = prog(t, 1.8, 3.6)
+    g1 = max(0.3, prog(t, 0.0, 1.0)); g2 = max(0.15, prog(t, 0.8, 3.0))
     c.set_source_rgb(1, 0.8, 0.2); c.rectangle(180, base - 110 * g1, 240, 110 * g1); c.fill()
     c.set_source_rgb(0.8, 0.8, 1); c.rectangle(640, base - 550 * g2, 240, 550 * g2); c.fill()
     text(c, "SUN'S SURFACE", 300, base + 60, 30, alpha=g1); text(c, 'LIGHTNING CHANNEL', 760, base + 60, 30, alpha=g2)
@@ -35,12 +36,12 @@ def s2(c, t):
     text(c, 'UP TO 50,000 F', 760, base - 650, 40, (1, 0.7, 0.5), alpha=prog(t, 3.2, 4))
 def s3(c, t):
     sky(c, *STORM); ground(c); cx = 540
-    heat = prog(t, 0.3, 1.0)
+    heat = max(0.35, prog(t, 0.0, 0.6))
     c.set_source_rgba(1, 0.4, 0.1, 0.5 * heat); c.set_line_width(40); c.move_to(cx, 500); c.line_to(cx, 1500); c.stroke()
     bolt(c, cx, 500, cx, 1500, 3, heat)
     for k in range(5):
-        r = ((t - 0.8 - k * 0.45) % 2.2) * 320
-        if t > 0.8 and r > 0:
+        r = ((t - 0.1 - k * 0.45) % 2.2) * 320
+        if t > 0.1 and r > 0:
             a = max(0, 1 - r / 700) * 0.6
             c.set_source_rgba(1, 0.75, 0.4, a); c.set_line_width(8); c.save(); c.translate(cx, 1000); c.scale(r / 500, 1); c.arc(0, 0, 500, 0, 2 * math.pi); c.restore(); c.stroke()
     text(c, 'HEAT', 540, 380, 70, (1, 0.6, 0.3), alpha=heat)
@@ -68,7 +69,7 @@ def s5(c, t):
     text(c, 'NEAR: SHARP CRACK', 540, 300, 44, (1, 0.9, 0.5), alpha=prog(t, 0.5, 1.2)); text(c, 'FAR: LOW RUMBLE', 540, 220, 44, (0.7, 0.85, 1), alpha=prog(t, 4, 5))
 def s6(c, t):
     sky(c, (0.04, 0.05, 0.12), (0.1, 0.12, 0.22)); ground(c); cx, cy = 540, 880
-    g = prog(t, 0.3, 3.0); r = 440 * g
+    g = max(0.15, prog(t, 0.0, 3.0)); r = 440 * g
     c.set_source_rgba(0.6, 0.8, 1, 0.12); c.arc(cx, cy, r, 0, 2 * math.pi); c.fill(); c.set_source_rgba(0.6, 0.8, 1, 0.8); c.set_line_width(8); c.arc(cx, cy, r, 0, 2 * math.pi); c.stroke()
     bolt(c, cx, cy - 120, cx, cy + 40, 9, 1, 8)
     text(c, 'ABOUT 10 MILES', 540, 360, 64, (1, 1, 1), alpha=g); text(c, 'AUDIBLE RANGE, TYPICALLY', 540, 440, 36, (0.8, 0.9, 1), alpha=g)

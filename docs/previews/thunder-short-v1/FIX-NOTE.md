@@ -1,0 +1,1 @@
+12:08 fix: first render had near-empty scene frames right after scene changes (scene-3 channel/labels faded in from 0, storm scene mostly dark). Scenes now show content from frame 0. 5x wording is the NWS source wording ("5 times hotter than the surface of the sun"), no ratio derived from Fahrenheit values.
