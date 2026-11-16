@@ -12,6 +12,12 @@ Saved: 2026-11-16
   License text: http://creativecommons.org/licenses/by/4.0/
 - Catalog metadata (incompetech pieces.json): length 00:03:22, bpm 73,
   instruments: Synth, Cello, Piano, Choir; feel: Calming, Relaxed, Somber; ISRC USUAN1700004
+- Per-track license evidence (composer's own catalog page for THIS composition, captured 2026-11-16):
+  https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1700004
+  shows this track's Attribution Code: "Bittersweet" Kevin MacLeod (incompetech.com) /
+  Licensed under Creative Commons: By Attribution 4.0 License /
+  http://creativecommons.org/licenses/by/4.0/
+  Capture saved: docs/licenses/evidence/bittersweet-track-page.txt (and .png for the two picks)
 - Required attribution (incompetech's own credit-block format, place in video description):
   "Bittersweet"
   Kevin MacLeod (incompetech.com)
