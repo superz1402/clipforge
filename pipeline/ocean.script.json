@@ -1,0 +1,39 @@
+{
+ "sentences": [
+  {
+   "text": "The ocean is salty, and rivers aren't. So where did all that salt come from?",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "Rainwater is slightly acidic, so it slowly erodes rocks on land and frees up dissolved minerals.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "Streams and rivers carry those minerals to the sea. Living things use some of them, but others stay, so their concentration builds up over time.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "Rivers taste fresh because rain keeps refilling them. The ocean collects everything that flows in.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "Openings in the seafloor, called hydrothermal vents, add salts too.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "By one estimate, the salt in the ocean, spread evenly over all land, would make a layer more than five hundred feet thick.",
+   "speed": 1.0,
+   "gap": 0.35
+  },
+  {
+   "text": "So, if rivers keep delivering salt for ages... is the ocean just the planet's most patient collector, or its saltiest hoarder?",
+   "speed": 1.0,
+   "gap": 0.35
+  }
+ ]
+}
