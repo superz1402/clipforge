@@ -1,4 +1,5 @@
-# ocean-short-v1 CHECKPOINT (12:13, run limit): script + sources done, scenes/render NOT started
-Script: pipeline/ocean.script.json (7 sentences, am_onyx suggested to alternate voices). Next steps: write pipeline/ocean_anim.py (7 scenes keyed to sentences: rain on rocks -> river carrying dots to sea -> dots used/remain accumulate -> river refilled vs ocean collecting -> vents -> layer-thickness bar -> closing bubble), then ANIM=ocean_anim.py ./pipeline/build.sh pipeline/ocean.script.json am_onyx OUT assets/music/candidates/Morning.mp3 'WHY IS THE\NOCEAN SALTY?' out.mp4; check 14 boundary frames, whisper QA, credits, commit. No uploads (YOUTUBE_UPLOAD_ENABLED=false).
-Sources (checked via search excerpts, fetch full pages before final): https://oceanservice.noaa.gov/facts/whysalty.html (rain acidic erodes rocks, ions carried by rivers, some removed by organisms, others accumulate; hydrothermal vents), https://oceanservice.noaa.gov/facts/riversnotsalty.html (rain refills rivers; ocean collects all), https://www.usgs.gov/water-science-school/science/why-ocean-salty (500 ft layer "by some estimates", source NOAA).
-Caution: keep the 500 ft claim hedged ("by one estimate"); don't claim exact salt tonnage.
+# Completed 2026-11-16
+Final: assets/final/ocean-short-v1-am_onyx.mp4
+Build: ANIM=ocean_anim.py bash pipeline/build.sh pipeline/ocean.script.json am_onyx OUT assets/music/candidates/Morning.mp3 'WHY IS THE\NOCEAN SALTY?' out.mp4
+Sources/rights/QA: CREDITS.md
+No upload. Next new topic: leap years (NASA JPL + SpacePlace).
