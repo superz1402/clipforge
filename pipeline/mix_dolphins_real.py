@@ -5,7 +5,7 @@ starts=json.load(open(P+'/starts.json'));end=float(open(P+'/end.txt').read());ed
 # Single source D3 (claudio baroni, Pexels 35610558), aerial pod over sand flats.
 # Verified-free zones: t=4-18.5 and t=19-32.3 (t>=33 has boat, t~37 snorkeler selfie; both avoided).
 # Vertical source: scale to fill 1080x1920, crop center 1080x810 band as fg window.
-shots=[4.5,10.5,18.5,26.5,6.0,20.0,12.0]
+shots=[4.5,10.5,18.5,24.0,6.0,20.0,12.0]
 credit='claudio baroni | Pexels'
 outs=[]
 for i,ss in enumerate(shots):
