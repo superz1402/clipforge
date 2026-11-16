@@ -13,15 +13,15 @@ def line(c,x,y,u,v,col=BLUE,w=8):c.set_source_rgb(*col);c.set_line_width(w);c.mo
 def arrow(c,x,y,u,v,col=BLUE):
  line(c,x,y,u,v,col);a=math.atan2(v-y,u-x)
  for k in (-.6,.6):line(c,u,v,u-25*math.cos(a+k),v-25*math.sin(a+k),col)
-def octo(c,x,y,t,s=1):
+def octo(c,x,y,t,s=1,col=PURPLE):
  c.save();c.translate(x,y);c.scale(s,s);c.set_line_cap(cairo.LINE_CAP_ROUND)
  # Eight independently visible arms, fanned out beneath the mantle.
  ends=[(-310,80),(-240,145),(-150,205),(-55,230),(55,230),(150,205),(240,145),(310,80)]
  for k,(xx,yy) in enumerate(ends):
   side=-1 if xx<0 else 1;yy+=9*math.sin(t*2+k);root=(k-3.5)*21
-  c.set_source_rgb(*PURPLE);c.set_line_width(28);c.move_to(root,65);c.curve_to(root+side*45,170,xx-side*40,yy+55,xx,yy);c.stroke()
+  c.set_source_rgb(*col);c.set_line_width(28);c.move_to(root,65);c.curve_to(root+side*45,170,xx-side*40,yy+55,xx,yy);c.stroke()
   dot(c,xx-side*14,yy+10,5,(.9,.6,.85));dot(c,xx-side*30,yy+23,5,(.9,.6,.85))
- c.set_source_rgb(*PURPLE);c.save();c.scale(1,1.1);c.arc(0,-30,150,0,6.3);c.fill();c.restore()
+ c.set_source_rgb(*col);c.save();c.scale(1,1.1);c.arc(0,-30,150,0,6.3);c.fill();c.restore()
  for xx in (-65,65):
   dot(c,xx,0,35,(.97,.98,1));dot(c,xx+6,4,15,(.05,.07,.13))
  c.set_source_rgb(.25,.08,.25);c.set_line_width(7);c.arc(0,60,24,.2,2.9);c.stroke();c.restore()
