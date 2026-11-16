@@ -1,0 +1,32 @@
+{
+  "sentences": [
+    {
+      "text": "February gets an extra day, roughly every four years. Is the calendar broken, or is Earth bad at deadlines?",
+      "gap": 0.3
+    },
+    {
+      "text": "A normal calendar year has three hundred sixty-five days. But Earth's trip around the Sun takes about three hundred sixty-five and a quarter days.",
+      "gap": 0.3
+    },
+    {
+      "text": "That leftover quarter is about six hours. After four years, those extra hours add up to roughly one day.",
+      "gap": 0.3
+    },
+    {
+      "text": "So we add February twenty-ninth. Without this correction, our calendar would slowly drift away from the seasons.",
+      "gap": 0.3
+    },
+    {
+      "text": "But a quarter day is only approximate. Adding a day every four years would slightly overcorrect.",
+      "gap": 0.3
+    },
+    {
+      "text": "Century years skip the leap day, unless divisible by four hundred. Two thousand qualified. Twenty-one hundred won't.",
+      "gap": 0.3
+    },
+    {
+      "text": "So, is February twenty-ninth a bonus day, or Earth's way of asking for an extension?",
+      "gap": 0.3
+    }
+  ]
+}

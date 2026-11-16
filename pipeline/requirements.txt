@@ -1,0 +1,6 @@
+kokoro-onnx
+soundfile
+faster-whisper
+num2words
+pycairo
+Pillow
