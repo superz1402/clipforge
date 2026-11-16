@@ -39,13 +39,34 @@ def fetch(url, dest=None):
     return data
 
 
+def mixkit_license_ok(path):
+    """Fail-closed per-asset gate. Mixkit has a Free License AND a Restricted
+    License (personal use only). Only an asset page that shows
+    data-license="videoFree" passes. Any error, 429, or missing marker = reject."""
+    try:
+        html = fetch("https://mixkit.co" + path).decode("utf-8", "ignore")
+    except Exception as exc:
+        print(f"[mixkit] license check failed, rejecting {path}: {exc}", flush=True)
+        return False
+    found = set(re.findall(r'data-license="([^"]*)"', html))
+    ok = found == {"videoFree"}
+    print(f"[mixkit] {path} license={sorted(found)} -> {'OK' if ok else 'REJECT'}", flush=True)
+    return ok
+
+
 def mixkit_ids(query):
     slug = re.sub(r"[^a-z0-9]+", "-", query.lower()).strip("-")
     url = f"https://mixkit.co/free-stock-video/{slug}/"
     print(f"[mixkit] {url}", flush=True)
     html = fetch(url).decode("utf-8", "ignore")
-    ids = re.findall(r"assets\.mixkit\.co/videos/(\d+)/", html)
-    return list(dict.fromkeys(ids))
+    pages = {}
+    for path, vid in re.findall(r'href="(/free-stock-video/[^"]*-(\d+)/)"', html):
+        pages.setdefault(vid, path)
+    ids = [v for v in dict.fromkeys(re.findall(r"assets\.mixkit\.co/videos/(\d+)/", html)) if v in pages]
+    # ids with no page link cannot be verified, so they are dropped (fail closed)
+    for v in ids:  # lazy: one page check per candidate actually considered
+        if mixkit_license_ok(pages[v]):
+            yield v
 
 
 def archive_items(query):
