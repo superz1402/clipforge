@@ -1,9 +1,32 @@
-{"sentences":[
-{"text":"A dolphin never fully falls asleep. Half of its brain stays awake all night. So who keeps watch?","gap":0.3},
-{"text":"Dolphins sleep with only one half of their brain at a time, while the other half stays alert.","gap":0.3},
-{"text":"That is why one eye stays open while they rest, the eye on the awake side. The other one is shut.","gap":0.3},
-{"text":"They need this because every breath is a conscious choice. A fully sleeping dolphin would stop breathing.","gap":0.3},
-{"text":"So they rest near the surface, drifting or swimming slowly, rising for air without properly waking up.","gap":0.3},
-{"text":"The awake half also watches for predators. After a while, the two halves switch shifts.","gap":0.3},
-{"text":"So if you could nap with half your brain awake, what would your other half be doing? Tell me in the comments.","gap":0.3}
-]}
+{
+ "sentences": [
+  {
+   "text": "A dolphin never fully falls asleep. Half of its brain stays awake all night. So who keeps watch?",
+   "gap": 0.3
+  },
+  {
+   "text": "Dolphins sleep with only one half of their brain at a time, while the other half stays alert.",
+   "gap": 0.3
+  },
+  {
+   "text": "That is why one eye stays open while they rest, watching. The other one, linked to the sleeping half of the brain, is shut.",
+   "gap": 0.3
+  },
+  {
+   "text": "They need this because every breath is a conscious choice. A dolphin that goes fully unconscious stops breathing.",
+   "gap": 0.3
+  },
+  {
+   "text": "So they rest near the surface, drifting or swimming slowly, rising for air without properly waking up.",
+   "gap": 0.3
+  },
+  {
+   "text": "The awake half also watches for predators. After a while, the two halves switch shifts.",
+   "gap": 0.3
+  },
+  {
+   "text": "So if you could nap with half your brain awake, what would your other half be doing? Tell me in the comments.",
+   "gap": 0.3
+  }
+ ]
+}

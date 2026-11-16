@@ -4,13 +4,13 @@
 - Script: pipeline/dolphins.script.json (7 sentences, ends with comment-bait question).
 - Compositor: pipeline/mix_dolphins_real.py (1080x1920, blurred bg, center-cropped fg band, per-clip credit line).
 - Music: assets/music/candidates/Morning.mp3 (Kevin MacLeod, CC BY 4.0 — see existing music evidence).
-- TTS/align QA: 127/128 words matched, mean est. error 0.19s, p90 0.43s, max 0.73s.
+- TTS/align QA: 131/132 words matched on stability re-check, mean drift -0.002s, p90 0.02s, max 0.34s.
 - Visual QA: 7 midpoints + 6 boundary frames + hook frame inspected (dolphins-QA-mids.png, dolphins-QA-bounds.png). No people, boats, watermarks, or UI artifacts in any shipped frame.
 
 ## Facts (verified)
 - Unihemispheric slow-wave sleep: one brain hemisphere rests while the other stays alert; they alternate.
-- Breathing is voluntary: dolphins cannot breathe while fully unconscious, so they cannot sleep like land mammals.
-- One eye stays active/open while the eye on the sleeping-hemisphere side is shut.
+- Breathing is voluntary: cetaceans must consciously take every breath and cannot breathe when unconscious (source cites anaesthetized captive dolphins that stopped breathing). Video ties breath-stopping to unconsciousness, not to sleep per se.
+- One eye remains active while the eye associated with the sleeping brain hemisphere is shut (wording mirrors the source; no body-side/laterality claim is made in the video).
 - They rest motionless at/near the surface or in the water column, or swim slowly; the alert half watches for predators and controls surfacing to breathe.
 Source: ORCA Foundation, "Cetacean Sleep" — https://orcafoundation.com/2017/08/cetacean-sleep/
 
