@@ -1,0 +1,77 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,DejaVu Sans,80,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,-1,0,0,0,100,100,1,0,1,6,2,2,100,100,470,1
+Style: Hook,DejaVu Sans,70,&H0000E5FF,&H00FFFFFF,&H00000000,&H80000000,-1,0,0,0,100,100,1,0,1,6,0,8,50,50,260,1
+Style: Label,DejaVu Sans,28,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,3,1,9,50,60,60,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.06,0:00:00.44,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}WHAT IF I
+Dialogue: 0,0:00:00.44,0:00:00.94,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}TOLD YOU
+Dialogue: 0,0:00:00.94,0:00:01.21,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}THERE'S A
+Dialogue: 0,0:00:01.21,0:00:01.77,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}CREATURE
+Dialogue: 0,0:00:01.77,0:00:02.54,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}NICKNAMED THE
+Dialogue: 0,0:00:02.54,0:00:02.95,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}IMMORTAL
+Dialogue: 0,0:00:02.95,0:00:03.61,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}JELLYFISH
+Dialogue: 0,0:00:03.61,0:00:04.11,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}ALMOST LIKE A
+Dialogue: 0,0:00:04.11,0:00:06.03,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}VAMPIRE SPOILER
+Dialogue: 0,0:00:06.03,0:00:06.50,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}IT'S NOT A
+Dialogue: 0,0:00:06.50,0:00:07.59,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}BAT MEET
+Dialogue: 0,0:00:07.59,0:00:08.38,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}TURRITOPSIS
+Dialogue: 0,0:00:08.38,0:00:09.68,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}DOHRNII MOST
+Dialogue: 0,0:00:09.68,0:00:10.50,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}JELLYFISH GROW
+Dialogue: 0,0:00:10.50,0:00:12.79,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}ONE WAY LARVA
+Dialogue: 0,0:00:12.79,0:00:14.64,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}POLYP ADULT
+Dialogue: 0,0:00:14.64,0:00:15.76,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}UNDER STRESS
+Dialogue: 0,0:00:15.76,0:00:16.61,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}LIKE INJURY OR
+Dialogue: 0,0:00:16.61,0:00:18.09,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}STARVATION THIS
+Dialogue: 0,0:00:18.09,0:00:18.77,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}ONE REVERSES
+Dialogue: 0,0:00:18.77,0:00:20.32,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}ITS LIFE CYCLE
+Dialogue: 0,0:00:20.32,0:00:21.65,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}ITS BELL SHRINKS
+Dialogue: 0,0:00:21.65,0:00:22.11,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}TENTACLES
+Dialogue: 0,0:00:22.11,0:00:23.35,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}DISAPPEAR AND
+Dialogue: 0,0:00:23.35,0:00:23.79,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}THE BODY
+Dialogue: 0,0:00:23.79,0:00:24.51,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}REORGANISES
+Dialogue: 0,0:00:24.51,0:00:25.14,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}BACK INTO A
+Dialogue: 0,0:00:25.14,0:00:26.50,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}JUVENILE POLYP
+Dialogue: 0,0:00:26.50,0:00:27.23,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}THE SECRET IS
+Dialogue: 0,0:00:27.23,0:00:29.04,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)\fs59}TRANSDIFFERENTIATION
+Dialogue: 0,0:00:29.04,0:00:29.70,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}SPECIALISED
+Dialogue: 0,0:00:29.70,0:00:30.44,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}CELLS CHANGE
+Dialogue: 0,0:00:30.44,0:00:31.14,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}IDENTITY TO
+Dialogue: 0,0:00:31.14,0:00:31.69,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}REBUILD THE
+Dialogue: 0,0:00:31.69,0:00:32.85,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}ORGANISM THE
+Dialogue: 0,0:00:32.85,0:00:34.24,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}CATCH IMMORTAL
+Dialogue: 0,0:00:34.24,0:00:34.94,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}DOESN'T MEAN
+Dialogue: 0,0:00:34.94,0:00:36.14,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}UNKILLABLE
+Dialogue: 0,0:00:36.14,0:00:36.90,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}PREDATORS EAT
+Dialogue: 0,0:00:36.90,0:00:38.52,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}IT DISEASE KILLS
+Dialogue: 0,0:00:38.52,0:00:39.41,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}IT TOO
+Dialogue: 0,0:00:39.41,0:00:40.17,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}REVERSALS HAVE
+Dialogue: 0,0:00:40.17,0:00:40.89,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}BEEN OBSERVED
+Dialogue: 0,0:00:40.89,0:00:42.20,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}REPEATEDLY BUT
+Dialogue: 0,0:00:42.20,0:00:43.06,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}NO INDIVIDUAL
+Dialogue: 0,0:00:43.06,0:00:43.56,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}WAS EVER
+Dialogue: 0,0:00:43.56,0:00:44.35,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}PROVEN TO LIVE
+Dialogue: 0,0:00:44.35,0:00:45.60,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}FOREVER SO IF
+Dialogue: 0,0:00:45.60,0:00:45.95,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}YOU COULD
+Dialogue: 0,0:00:45.95,0:00:46.58,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}REVERSE YOUR
+Dialogue: 0,0:00:46.58,0:00:47.62,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}BIOLOGICAL AGE
+Dialogue: 0,0:00:47.62,0:00:48.70,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}JUST ONCE
+Dialogue: 0,0:00:48.70,0:00:49.17,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}WOULD YOU GO
+Dialogue: 0,0:00:49.17,0:00:49.51,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}BACK TO
+Dialogue: 0,0:00:49.51,0:00:50.70,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}CHILDHOOD AND
+Dialogue: 0,0:00:50.70,0:00:51.31,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}DON'T SAY IT'S
+Dialogue: 0,0:00:51.31,0:00:52.09,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}JUST TO AVOID
+Dialogue: 0,0:00:52.09,0:00:53.30,Cap,,0,0,0,,{\fscx85\fscy85\t(0,90,\fscx100\fscy100)}PAYING BILLS
+Dialogue: 1,0:00:00.10,0:00:04.60,Hook,,0,0,0,,THE IMMORTAL\NJELLYFISH?
+Dialogue: 1,0:00:00.00,0:00:07.20,Label,,0,0,0,,Illustrative footage: NOAA Ocean Exploration (not this species)
+Dialogue: 1,0:00:07.20,0:00:11.50,Label,,0,0,0,,Turritopsis dohrnii. Photo: Karen J. Osborn, Smithsonian (CC0)
+Dialogue: 1,0:00:11.50,0:00:32.70,Label,,0,0,0,,Simplified schematic, not to scale
+Dialogue: 1,0:00:32.70,0:00:53.40,Label,,0,0,0,,Illustrative footage: NOAA Ocean Exploration (not this species)
