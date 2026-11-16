@@ -5,10 +5,10 @@ starts=json.load(open(P+'/starts.json'));end=float(open(P+'/end.txt').read());ed
 # shot: (file, seek_seconds, speed, credit)
 shots=[
  ('S1-florian-18052777.mp4',0,0.8,'Florian Delée | Pexels'),
- ('S2-yusuf-31683428.mp4',0,0.6,'Yusuf Mahammed | Pexels'),
+ ('S6-lachlan-6510690.mp4',0,1.0,'Lachlan Ross | Pexels'),
  ('F1-julien-31693357.mp4',0,1.0,'Julien Goettelmann | Pexels'),
  ('S1-florian-18052777.mp4',5.76,0.8,'Florian Delée | Pexels'),
- ('S6-lachlan-6510690.mp4',0,0.95,'Lachlan Ross | Pexels'),
+ ('S6-lachlan-6510690.mp4',6.6,0.95,'Lachlan Ross | Pexels'),
  ('S5-closeup-36329346.mp4',0,0.95,'Magda Ehlers | Pexels'),
  ('S5-closeup-36329346.mp4',5.7,0.88,'Magda Ehlers | Pexels'),
 ]
