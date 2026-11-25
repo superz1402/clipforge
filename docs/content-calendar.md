@@ -50,3 +50,39 @@ firecrackers burst".
 
 After Dec 15 the rotation repeats; refresh this file with the next 30 ideas
 before then (seasonal hooks: winter/Christmas animals mid-December).
+
+## Actual releases and next batch (updated 25 Nov 2026)
+
+The rotation table above is the original plan. Actual releases diverged from
+22 Nov: custom question-first films shipped instead (Elephant 22 Nov,
+Crocodile 23, Giraffe 24, Whale 25, Murmuration 26, Hummingbird 27, Zebra 28,
+Butterfly 29, all 7 PM IST). Nothing is scheduled after 29 Nov.
+
+Next batch, decided 25 Nov from the Studio review
+(docs/analytics/2026-11-25-studio-review.md). Each claim still goes through
+the research-first step, and footage through the Mixkit/NOAA availability
+check, before scripting.
+
+| Date | Topic | Working title |
+| --- | --- | --- |
+| Nov 30 | Orca vs great white | "An Orca Can Kill a Great White. So Why Doesn't It Eat It?" |
+| Dec 1 | Leopard seal | "Why You'd Survive a Shark Before a Leopard Seal" |
+| Dec 2 | Sperm whale | "A Sperm Whale's Head Is One Third of Its Body. Why?" |
+| Dec 3 | Octopus | "This Octopus Has Three Hearts, and Two of Them Quit" |
+| Dec 4 | Polar bear | "Why Polar Bears Are Nearly Invisible to Infrared" (verify claim first) |
+| Dec 5 | Mantis shrimp | "Why a Mantis Shrimp Punches Like a Bullet" (verify wording in research) |
+| Dec 6 | Crows | "Why a Crow Will Remember Your Face for Years" |
+
+Rhythm stays one film a day at 7 PM IST.
+
+## Working rules (from the 25 Nov review, via Jakeschincariol/youtube-agent-skill)
+
+- Shorts hook metric: the stayed-vs-swiped rate and the first-3-seconds hold.
+  Run retention.py only with a proportional opening window (~10% of the film);
+  its fixed 30-second window is wrong for Shorts.
+- hookscore.py is a floor check, not a ranking; it cannot tell a hit from a
+  miss, and the niche's viral titles score in the same band as ours.
+- Title and first frame are one unit: the first frame shows the thing the
+  title asks about, and the title does not repeat the on-screen words.
+- One fix per audit. The current lever is the swipe rate, worked through the
+  first frame plus the first line.
